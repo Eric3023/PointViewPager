@@ -24,8 +24,8 @@ public class PointViewPager extends FrameLayout {
     private ViewPager mViewPager;
     private List<Integer> mImageResources = new ArrayList<>();//图片格式资源
     private List<String> mImageString = new ArrayList<>();//图片格式url
-    private List<ImageView> mImageViews= new ArrayList<ImageView>();
-    private int defaultResouce = R.drawable.img_default;//默认显示的图片
+    private int[] defaultResouce = {R.drawable.img_default0,R.drawable.img_default1,R.drawable.img_default2,
+            R.drawable.img_default3,R.drawable.img_default4};//默认显示的图片
     private int defaultCount = 5;//默认显示的数量
     private ImageView.ScaleType imageType = ImageView.ScaleType.FIT_XY;//默认图片的伸缩模式
     private boolean isLoop = false;//是否循环播放
@@ -69,27 +69,11 @@ public class PointViewPager extends FrameLayout {
 
         if(mImageResources.size()==0){
             for (int i = 0; i < 5; i++) {
-                mImageResources.add(defaultResouce);
+                mImageResources.add(defaultResouce[i%defaultResouce.length]);
             }
         }
 
-        if(mImageString.size()!=0){
-            for (int i = 0; i < mImageString.size(); i++) {
-                ImageView imageView = new ImageView(mContext);
-                imageView.setScaleType(imageType);
-//                Picasso.get().load(mImageString.get(i)).placeholder(defaultResouce).error(defaultResouce).into(imageView);
-                mImageViews.add(imageView);
-            }
-        }else{
-            for (int i = 0; i < mImageResources.size(); i++) {
-                ImageView imageView = new ImageView(mContext);
-                imageView.setScaleType(imageType);
-                imageView.setImageResource(mImageResources.get(i));
-                mImageViews.add(imageView);
-            }
-        }
-
-        PointPagerAdapter pagerAdapter = new PointPagerAdapter(mImageViews,isLoop, isAuto, mAutoTime);
+        PointPagerAdapter pagerAdapter = new PointPagerAdapter(mContext, mImageString, mImageResources, isLoop, isAuto, mAutoTime);
         mViewPager.setAdapter(pagerAdapter);
 
         if(isLoop)
