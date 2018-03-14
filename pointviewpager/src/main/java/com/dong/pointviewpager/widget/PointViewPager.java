@@ -69,7 +69,7 @@ public class PointViewPager extends FrameLayout {
 
         if(mImageResources.size()==0){
             for (int i = 0; i < 5; i++) {
-                mImageResources.add(defaultResouce[5%defaultResouce.length]);
+                mImageResources.add(defaultResouce[i%defaultResouce.length]);
             }
         }
 
