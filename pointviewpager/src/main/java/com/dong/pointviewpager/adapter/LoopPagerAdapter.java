@@ -11,14 +11,14 @@ import java.util.List;
  * Created by Dong on 2018/3/13.
  */
 
-public class PointPagerAdapter extends PagerAdapter {
+public class LoopPagerAdapter extends PagerAdapter {
 
     private List<ImageView> mList;
     private boolean isLoop;
     private boolean isAuto;
     private int mAutoTime;
 
-    public PointPagerAdapter(List<ImageView> list, boolean isLoop, boolean isAuto, int mAutoTime) {
+    public LoopPagerAdapter(List<ImageView> list, boolean isLoop, boolean isAuto, int mAutoTime) {
         this.mList = list;
         this.isLoop = isLoop;
         this.isAuto = isAuto;
@@ -28,7 +28,7 @@ public class PointPagerAdapter extends PagerAdapter {
     @Override
     public int getCount() {
         if(mList!=null)
-            if(isLoop)
+            if(isLoop&&mList.size()>3)
                 return Integer.MAX_VALUE;
             else
                 return mList.size();

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.dong.pointandviewpager.sample.MainActivity">
 
-    <com.dong.pointviewpager.widget.PointViewPager
+    <com.dong.pointviewpager.widget.LoopViewPager
         android:id="@+id/pointViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

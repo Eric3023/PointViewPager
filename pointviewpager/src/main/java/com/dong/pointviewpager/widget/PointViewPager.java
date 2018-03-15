@@ -9,7 +9,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.dong.pointviewpager.R;
-import com.dong.pointviewpager.adapter.PointPagerAdapter;
+import com.dong.pointviewpager.adapter.LoopPagerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +51,7 @@ public class PointViewPager extends FrameLayout {
 
 
     private void init(Context context) {
+        setWillNotDraw(false);
         initViewPager(context);
     }
 
@@ -89,7 +90,7 @@ public class PointViewPager extends FrameLayout {
             }
         }
 
-        PointPagerAdapter pagerAdapter = new PointPagerAdapter(mImageViews,isLoop, isAuto, mAutoTime);
+        LoopPagerAdapter pagerAdapter = new LoopPagerAdapter(mImageViews,isLoop, isAuto, mAutoTime);
         mViewPager.setAdapter(pagerAdapter);
 
         if(isLoop)
