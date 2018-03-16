@@ -93,11 +93,17 @@ public class PointActivity extends AppCompatActivity {
     }
 
     private void initPointView(PointView pointView) {
+        //设置未被选中时小圆点的颜色(默认白色)
         pointView.setNfColor(Color.RED);
+        //设置选中时小圆点的演的（默认红色）
         pointView.setfColor(Color.BLUE);
+        //设置距离控件底部的距离
         pointView.setDisbottom(getResources().getDimension(R.dimen.x10));
+        //设置小圆点之间的间隔距离
         pointView.setDistance(getResources().getDimension(R.dimen.x8));
+        //设置小圆点的半径
         pointView.setRudis(getResources().getDimension(R.dimen.x3));
+        //设置小圆点的滑动方式（INSTANT_SCROLL或SMOOTH_SCROLL）
         pointView.setScrollType(PointView.INSTANT_SCROLL);
         pointView.setScrollType(PointView.SMOOTH_SCROLL);
     }
