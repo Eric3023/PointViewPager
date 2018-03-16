@@ -95,9 +95,9 @@ public class PointActivity extends AppCompatActivity {
     private void initPointView(PointView pointView) {
         pointView.setNfColor(Color.RED);
         pointView.setfColor(Color.BLUE);
-//        pointView.setDisbottom(20);
-//        pointView.setDistance(20);
-//        pointView.setRudis(20);
+        pointView.setDisbottom(getResources().getDimension(R.dimen.x10));
+        pointView.setDistance(getResources().getDimension(R.dimen.x8));
+        pointView.setRudis(getResources().getDimension(R.dimen.x3));
         pointView.setScrollType(PointView.INSTANT_SCROLL);
         pointView.setScrollType(PointView.SMOOTH_SCROLL);
     }

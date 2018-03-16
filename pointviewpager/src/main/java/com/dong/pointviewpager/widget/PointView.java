@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.dong.pointviewpager.R;
+
 
 /**
  * Created by Dong on 2018/3/16.
@@ -17,7 +19,8 @@ import android.view.ViewGroup;
 
 public class PointView extends View {
 
-    private int count=7;//小圆点数量
+    private Context context;
+    private int count=5;//小圆点数量
     private int nfColor;//未被选中时的颜色
     private int fColor;//被选中时的颜色
     private float distance;//圆点之间的间距
@@ -31,25 +34,26 @@ public class PointView extends View {
 
     public PointView(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public PointView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public PointView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init();
+        init(context);
     }
 
-    private void init() {
+    private void init(Context context) {
+        this.context = context;
         nfColor = Color.WHITE;
         fColor = Color.RED;
-        distance = 20;
-        rudis= 10;
-        disbottom=30;
+        distance = getResources().getDimension(R.dimen.x10);
+        rudis= getResources().getDimension(R.dimen.x4);
+        disbottom=getResources().getDimension(R.dimen.x10);
     }
 
     @Override
