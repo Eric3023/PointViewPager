@@ -130,8 +130,12 @@ private void initPointView(PointView pointView) {
 ```
 ##### 效果：
 SMOOTH_SCROLL
+
+
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
  
  INSTANT_SCROLL
+ 
+ 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
 
