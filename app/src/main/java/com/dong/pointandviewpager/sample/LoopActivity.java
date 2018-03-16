@@ -12,14 +12,14 @@ import com.dong.pointviewpager.widget.LoopViewPager;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class LoopActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LoopViewPager pager = findViewById(R.id.pointViewPager);
+        LoopViewPager pager = findViewById(R.id.loopViewPager);
 
         //设置是否循环(图片数量大于3有效)
         pager.setLoop(true);
@@ -58,14 +58,15 @@ public class MainActivity extends AppCompatActivity {
 
         //设置选中监听，替代addOnPageChangeListener方法
         pager.setOnLoopPageChangeListener(new OnLoopPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
+            @Override
+            protected void onViewPageSelected(int position) {
+                Log.i("Dong","选中Item:"+position);
             }
 
             @Override
-            public void onPageSelected(int position) {
-                Log.i("Dong","选中Item:"+position);
+            protected void onViewPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override

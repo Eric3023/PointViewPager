@@ -8,10 +8,9 @@ import android.widget.ImageView;
 
 import com.dong.pointviewpager.R;
 import com.dong.pointviewpager.adapter.LoopPagerAdapter;
+import com.dong.pointviewpager.bean.Message;
 import com.dong.pointviewpager.listener.OnLoopPageChangeListener;
 import com.squareup.picasso.Picasso;
-
-import org.reactivestreams.Subscriber;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +20,6 @@ import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Dong on 2018/3/15.
@@ -45,7 +43,9 @@ public class LoopViewPager extends ViewPager {
     private int[] defaultResouces = {R.drawable.img_default0, R.drawable.img_default1, R.drawable.img_default2};//默认显示占位图片
 
     private OnLoopPageChangeListener onLoopPageChangeListener;
-    //滑动状态观察者
+
+    private PointView pointView;
+    //状态观察者
     private Observer stateObserver = new Observer() {
         @Override
         public void onSubscribe(Disposable d) {
@@ -55,6 +55,41 @@ public class LoopViewPager extends ViewPager {
         @Override
         public void onNext(Object value) {
             scroll_state = (int)value;
+        }
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
+
+    //滑动观察者
+    private Observer scrollObserver = new Observer() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(Object value) {
+            if(pointView!=null&&getCount()!=0){
+                Message message = (Message) value;
+                int position = message.getPosition()%getCount();
+                float positionOffset = message.getPositionOffset();
+                if(position == getCount()-1){
+                    if(positionOffset>0.5)
+                        position = 0;
+                    positionOffset = 0;
+                }
+                pointView.setPercent(position+positionOffset);
+                pointView.invalidate();
+
+            }
         }
 
         @Override
@@ -84,7 +119,6 @@ public class LoopViewPager extends ViewPager {
 
     public void setLoop(boolean loop) {
         isLoop = loop;
-        loopCheck();
         loopPagerAdapter = new LoopPagerAdapter(imageViews, isLoop, isAuto, autoTime);
         setAdapter(loopPagerAdapter);
         loopCheck();
@@ -108,6 +142,12 @@ public class LoopViewPager extends ViewPager {
         autoPlay();
     }
 
+    public int getCount(){
+        if(imageViews!=null)
+            return imageViews.size();
+        return 0;
+    }
+
     public int getDefaultCount() {
         return defaultCount;
     }
@@ -129,6 +169,8 @@ public class LoopViewPager extends ViewPager {
 
             loopPagerAdapter.notifyDataSetChanged();
             loopCheck();
+            if (pointView!=null)
+                pointView.setCount(getCount());
         }
     }
 
@@ -170,6 +212,8 @@ public class LoopViewPager extends ViewPager {
 
         loopPagerAdapter.notifyDataSetChanged();
         loopCheck();
+        if (pointView!=null)
+            pointView.setCount(getCount());
     }
 
     public List<String> getImageString() {
@@ -195,6 +239,8 @@ public class LoopViewPager extends ViewPager {
 
         loopPagerAdapter.notifyDataSetChanged();
         loopCheck();
+        if (pointView!=null)
+            pointView.setCount(getCount());
     }
 
     public int[] getDefaultResouces() {
@@ -218,13 +264,22 @@ public class LoopViewPager extends ViewPager {
 
     public void setOnLoopPageChangeListener(OnLoopPageChangeListener onLoopPageChangeListener) {
         this.onLoopPageChangeListener = onLoopPageChangeListener;
-        onLoopPageChangeListener.setObserver(stateObserver);
+        onLoopPageChangeListener.setStateObserver(stateObserver);
+        onLoopPageChangeListener.setScrollObserver(scrollObserver);
         addOnPageChangeListener(this.onLoopPageChangeListener);
     }
 
+    public PointView getPointView() {
+        return pointView;
+    }
+
+    public void setPointView(PointView pointView) {
+        this.pointView = pointView;
+    }
+
     /*
-     * 初始化
-     */
+         * 初始化
+         */
     private void init(Context context) {
         this.context = context;
 
@@ -245,28 +300,28 @@ public class LoopViewPager extends ViewPager {
         //设置监听
         onLoopPageChangeListener = new OnLoopPageChangeListener() {
             @Override
+            protected void onViewPageSelected(int position) {
+
+            }
+
+            @Override
+            protected void onViewPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
             protected void onViewPageScrollStateChanged(int state) {
 
             }
-
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-
-            }
         };
-        addOnPageChangeListener(onLoopPageChangeListener);
+        setOnLoopPageChangeListener(onLoopPageChangeListener);
     }
 
     public void loopCheck(){
-        if(isLoop&&loopPagerAdapter.getCount() <=3){
-            setCurrentItem(0, false);
-        }else{
+        if(isLoop&&loopPagerAdapter.getCount() >3){
             setCurrentItem(loopPagerAdapter.getCount() / 2, false);
+        }else{
+            setCurrentItem(0, false);
         }
     }
 
