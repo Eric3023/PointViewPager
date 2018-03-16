@@ -105,6 +105,6 @@ public class PointActivity extends AppCompatActivity {
         pointView.setRudis(getResources().getDimension(R.dimen.x3));
         //设置小圆点的滑动方式（INSTANT_SCROLL或SMOOTH_SCROLL）
         pointView.setScrollType(PointView.INSTANT_SCROLL);
-        pointView.setScrollType(PointView.SMOOTH_SCROLL);
+//        pointView.setScrollType(PointView.SMOOTH_SCROLL);
     }
 }
