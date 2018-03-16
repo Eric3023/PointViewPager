@@ -11,7 +11,7 @@ allprojects {
 
 dependencies {
 
-    compile 'com.github.Eric3023:PointViewPager:v1.2.0'
+    compile 'com.github.Eric3023:PointViewPager:v1.2.2'
     
 }
 
@@ -26,7 +26,7 @@ dependencies {
     android:layout_height="match_parent"/>
 ```
 
-java代码中设置控件的属性
+java代码中设置控件的属性,根据需要设置部分属性，不用全部设置
 
 ```java
 LoopViewPager pager = findViewById(R.id.loopViewPager);
