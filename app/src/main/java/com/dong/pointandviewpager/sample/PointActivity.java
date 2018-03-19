@@ -21,8 +21,12 @@ import java.util.List;
 
 public class PointActivity extends AppCompatActivity {
 
-    private final String URL1="http://img.zcool.cn/community/01561959967047a80121560336a49c.jpg@2o.jpg";
-    private final String URL2="http://img5.duitang.com/uploads/item/201403/24/20140324103016_h8TGu.jpeg";
+    //高清图片地址，检测内存溢出
+    private final String URL1="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521457747660&di=887daf76ffef3e53185961465e8ed1d0&imgtype=0&src=http%3A%2F%2Fpic.ffpic.com%2Ffiles%2F2014%2F0930%2F0929bxfjgqsjbzxz10.jpg";
+    private final String URL2="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521457769368&di=3faec8849050a1b588b064d4d214fca6&imgtype=0&src=http%3A%2F%2Fcdnq.duitang.com%2Fuploads%2Fitem%2F201410%2F02%2F20141002110720_cRShi.thumb.700_0.jpeg";
+    private final String URL3="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521457800750&di=e5478e296f2d0f2dff327d4956823f3d&imgtype=0&src=http%3A%2F%2Fatt2.citysbs.com%2Fhangzhou%2F2016%2F09%2F26%2F09%2Fmiddle_440x823-093841_v2_16321474853921062_3746e270843097ce704ce1fb01ebf331.jpg";
+    private final String URL4="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521457826604&di=5431a0d1dbacf167219092f493f85f7b&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fmobile%2F0%2F52ca4bf5af1c9.jpg";
+    private final String URL5="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1521457846980&di=d860080212634c5e54ad9e20461c0ac1&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fmobile%2F4%2F5954ee11044ea.jpg";
     private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
         @Override
         protected void onViewPageSelected(int position) {
@@ -70,22 +74,22 @@ public class PointActivity extends AppCompatActivity {
         List<LoopViewPagerBean> urlBeans = new ArrayList<LoopViewPagerBean>();
         LoopViewPagerBean urlBean1 = new LoopViewPagerBean(URL1, null);
         LoopViewPagerBean urlBean2 = new LoopViewPagerBean(URL2, null);
+        LoopViewPagerBean urlBean3 = new LoopViewPagerBean(URL3, null);
+        LoopViewPagerBean urlBean4 = new LoopViewPagerBean(URL4, null);
+        LoopViewPagerBean urlBean5 = new LoopViewPagerBean(URL5, null);
         urlBeans.add(urlBean1);
         urlBeans.add(urlBean2);
+        urlBeans.add(urlBean3);
+        urlBeans.add(urlBean4);
+        urlBeans.add(urlBean5);
 
         List<LoopViewPagerBean> resourceBeans = new ArrayList<LoopViewPagerBean>();
         LoopViewPagerBean resourceBean1 = new LoopViewPagerBean(R.drawable.img0, null);
         LoopViewPagerBean resourceBean2 = new LoopViewPagerBean(R.drawable.img1, null);
         LoopViewPagerBean resourceBean3 = new LoopViewPagerBean(R.drawable.img2, null);
-        LoopViewPagerBean resourceBean4 = new LoopViewPagerBean(R.drawable.img0, null);
-        LoopViewPagerBean resourceBean5 = new LoopViewPagerBean(R.drawable.img1, null);
-        LoopViewPagerBean resourceBean6 = new LoopViewPagerBean(R.drawable.img2, null);
         resourceBeans.add(resourceBean1);
         resourceBeans.add(resourceBean2);
         resourceBeans.add(resourceBean3);
-        resourceBeans.add(resourceBean4);
-        resourceBeans.add(resourceBean5);
-        resourceBeans.add(resourceBean6);
 
         //配置LoopViewPager参数
         loopViewPager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型
@@ -94,7 +98,7 @@ public class PointActivity extends AppCompatActivity {
                 .setAutoTime(5)//设置图片时间间隔
                 .setOnLoopPageChangeListener(onLoopPageChangeListener)//设置选中监听，替代addOnPageChangeListener方法
                 .setOnLoopPagerClickListener(onLoopPagerClickListener)//设置点击监听
-                .setBeans(resourceBeans)//设置数据源
+                .setBeans(urlBeans)//设置数据源
                 .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
                 .initialise();//参数配置完成后，执行适配(必须执行，且必须最后一步执行)
 
