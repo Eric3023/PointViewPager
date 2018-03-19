@@ -98,7 +98,7 @@ resourceBeans.add(resourceBean4);
 ##### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
-#### 2.PonitViewPager的使用
+#### 3.PonitViewPager的使用
 布局文件中添加PointViewPager控件：
 
 ```xml
