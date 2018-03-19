@@ -76,22 +76,22 @@ pager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型 Lo
 ```
 
 
-数据源beans是个集合（List<LoopViewPagerBean>），LoopViewPagerBean包含Object object、String url、int resourceID三个参数，Object根据项目自行设定类型，url为图片的url路径，一般由object的getxxx方法获得，resourceID为图片的资源路径（url和resourceID，优先选择URL作为数据源）
+数据源beans是个集合（List<LoopViewPagerBean>），LoopViewPagerBean包含Object object、String url、int resourceID三个参数，Object根据项目自行设定类型，url为图片的url路径，一般由object的getxxx方法获得，也可自行设置，resourceID为图片的资源路径（url和resourceID，优先选择URL作为数据源）
 
 
 举例说明数据源的初始化：
 ```java
-        //数据源
+//数据源
 
-        List<LoopViewPagerBean> resourceBeans = new ArrayList<LoopViewPagerBean>();
-        LoopViewPagerBean resourceBean1 = new LoopViewPagerBean(R.drawable.img0, null);
-        LoopViewPagerBean resourceBean2 = new LoopViewPagerBean(R.drawable.img1, null);
-        LoopViewPagerBean resourceBean3 = new LoopViewPagerBean(R.drawable.img2, null);
-        LoopViewPagerBean resourceBean4 = new LoopViewPagerBean(R.drawable.img0, null);
-        resourceBeans.add(resourceBean1);
-        resourceBeans.add(resourceBean2);
-        resourceBeans.add(resourceBean3);
-        resourceBeans.add(resourceBean4);
+List<LoopViewPagerBean> resourceBeans = new ArrayList<LoopViewPagerBean>();
+LoopViewPagerBean resourceBean1 = new LoopViewPagerBean(R.drawable.img0, null);
+LoopViewPagerBean resourceBean2 = new LoopViewPagerBean(R.drawable.img1, null);
+LoopViewPagerBean resourceBean3 = new LoopViewPagerBean(R.drawable.img2, null);
+LoopViewPagerBean resourceBean4 = new LoopViewPagerBean(R.drawable.img0, null);
+resourceBeans.add(resourceBean1);
+resourceBeans.add(resourceBean2);
+resourceBeans.add(resourceBean3);
+resourceBeans.add(resourceBean4);
 ```
 
 
