@@ -85,6 +85,8 @@ pager.setOnLoopPageChangeListener(new OnLoopPageChangeListener() {
     }
 });
 ```
+##### 效果：
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
 #### 2.PonitViewPager的使用
 布局文件中添加LoopViewPager控件：
@@ -126,3 +128,14 @@ private void initPointView(PointView pointView) {
    pointView.setScrollType(PointView.SMOOTH_SCROLL);
 }
 ```
+##### 效果：
+SMOOTH_SCROLL
+
+
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
+ 
+ INSTANT_SCROLL
+ 
+ 
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
+
