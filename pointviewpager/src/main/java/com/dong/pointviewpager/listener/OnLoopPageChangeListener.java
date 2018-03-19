@@ -1,10 +1,8 @@
 package com.dong.pointviewpager.listener;
 
 import android.support.v4.view.ViewPager;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.dong.pointviewpager.bean.Message;
+import com.dong.pointviewpager.bean.ScrollBean;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -17,34 +15,47 @@ import io.reactivex.Observer;
 
 public abstract class OnLoopPageChangeListener implements ViewPager.OnPageChangeListener {
 
-    private Observer stateObserver;
-    private Observer scrollObserver;
+    private Observer observer;
 
     private int scroll_state;
 
-    public void setStateObserver(Observer observer) {
-        this.stateObserver = observer;
+    private int position;
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
     }
 
-    public void setScrollObserver(Observer observer) {
-        this.scrollObserver = observer;
+    public void setPosition(int position) {
+        this.position = position;
     }
 
     @Override
-    public void onPageSelected(int position) {
-        onViewPageSelected(position);
+    public void onPageSelected(final int position) {
+        if (observer != null) {
+            Observable.create(new ObservableOnSubscribe<ScrollBean>() {
+                @Override
+                public void subscribe(ObservableEmitter<ScrollBean> e) throws Exception {
+                    ScrollBean bean =new ScrollBean();
+                    bean.setSelect_position(position);
+                    e.onNext(bean);
+                }
+            }).subscribe(observer);
+        }
+        onViewPageSelected(this.position);
     }
 
     @Override
     public void onPageScrolled(final int position, final float positionOffset, int positionOffsetPixels) {
-        if (scrollObserver != null) {
-            Observable.create(new ObservableOnSubscribe<Message>() {
+        if (observer != null) {
+            Observable.create(new ObservableOnSubscribe<ScrollBean>() {
                 @Override
-                public void subscribe(ObservableEmitter<Message> e) throws Exception {
-                    Message message = new Message(position, positionOffset);
-                    e.onNext(message);
+                public void subscribe(ObservableEmitter<ScrollBean> e) throws Exception {
+                    ScrollBean bean = new ScrollBean();
+                    bean.setScroll_positon(position);
+                    bean.setScroll_percent(positionOffset);
+                    e.onNext(bean);
                 }
-            }).subscribe(scrollObserver);
+            }).subscribe(observer);
         }
 
         onViewPageScrolled(position, positionOffset, positionOffsetPixels);
@@ -65,13 +76,15 @@ public abstract class OnLoopPageChangeListener implements ViewPager.OnPageChange
                 break;
         }
 
-        if (stateObserver != null) {
-            Observable.create(new ObservableOnSubscribe<Integer>() {
+        if (observer != null) {
+            Observable.create(new ObservableOnSubscribe<ScrollBean>() {
                 @Override
-                public void subscribe(ObservableEmitter<Integer> e) throws Exception {
-                    e.onNext(scroll_state);
+                public void subscribe(ObservableEmitter<ScrollBean> e) throws Exception {
+                    ScrollBean bean =new ScrollBean();
+                    bean.setScroll_state(scroll_state);
+                    e.onNext(bean);
                 }
-            }).subscribe(stateObserver);
+            }).subscribe(observer);
         }
 
         onViewPageScrollStateChanged(state);

@@ -1,15 +1,19 @@
 package com.dong.pointviewpager.widget;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.dong.pointviewpager.R;
 import com.dong.pointviewpager.adapter.LoopPagerAdapter;
-import com.dong.pointviewpager.bean.Message;
+import com.dong.pointviewpager.bean.LoopViewPagerBean;
+import com.dong.pointviewpager.bean.ScrollBean;
 import com.dong.pointviewpager.listener.OnLoopPageChangeListener;
+import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -35,18 +39,41 @@ public class LoopViewPager extends ViewPager {
     private Disposable disposable;
     private LoopPagerAdapter loopPagerAdapter;//ViewPager适配器
 
-    private int defaultCount = 5;//默认显示的数量
-    private ImageView.ScaleType imageType = ImageView.ScaleType.FIT_XY;//默认图片的伸缩模式
-    private List<Integer> imageResources = new ArrayList<Integer>();//图片格式资源
-    private List<String> imageString = new ArrayList<String>();//图片格式url(优先使用)
-    private List<ImageView> imageViews = new ArrayList<ImageView>();
-    private int[] defaultResouces = {R.drawable.img_default0, R.drawable.img_default1, R.drawable.img_default2};//默认显示占位图片
+    public static final int FIT_XY = 0;
+    public static final int CENTER_INSIDE = 1;
+    public static final int CENTER_CROP = 2;
+    private int imageScale = FIT_XY;//默认图片的伸缩模式
 
-    private OnLoopPageChangeListener onLoopPageChangeListener;
+    private int defaultCount = 5;//默认显示的数量
+    private int[] defaultResouces = {R.drawable.bigimg1, R.drawable.bigimg2, R.drawable.bigimg3};//默认显示占位图片
+
+    private List<LoopViewPagerBean> beans = new ArrayList<LoopViewPagerBean>();
+    private List<ImageView> imageViews = new ArrayList<ImageView>();
+
+    private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
+        @Override
+        protected void onViewPageSelected(int position) {
+
+        }
+
+        @Override
+        protected void onViewPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+        }
+
+        @Override
+        protected void onViewPageScrollStateChanged(int state) {
+
+        }
+    };
+
+    private OnLoopPagerClickListener onLoopPagerClickListener;
 
     private PointView pointView;
-    //状态观察者
-    private Observer stateObserver = new Observer() {
+
+    private int position;
+
+    private Observer selectObserver = new Observer() {
         @Override
         public void onSubscribe(Disposable d) {
 
@@ -54,7 +81,33 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void onNext(Object value) {
-            scroll_state = (int)value;
+            ScrollBean bean = (ScrollBean) value;
+            if (bean.getScroll_state() != -1) {
+                scroll_state = bean.getScroll_state();
+            }
+
+            if (bean.getScroll_positon() != -1 && bean.getScroll_percent() != -1) {
+                if (pointView != null && getCount() != 0) {
+                    int position = bean.getScroll_positon() % getCount();
+                    float positionOffset = bean.getScroll_percent();
+                    if (position == getCount() - 1) {
+                        if (positionOffset > 0.5)
+                            position = 0;
+                        positionOffset = 0;
+                    }
+                    pointView.setPercent(position + positionOffset);
+                    pointView.invalidate();
+
+                }
+            }
+
+            if (bean.getSelect_position() != -1) {
+                if(getCount()!=0){
+                    position = bean.getSelect_position()%getCount();
+                    if(onLoopPageChangeListener!=null)
+                        onLoopPageChangeListener.setPosition(position);
+                }
+            }
         }
 
         @Override
@@ -68,8 +121,7 @@ public class LoopViewPager extends ViewPager {
         }
     };
 
-    //滑动观察者
-    private Observer scrollObserver = new Observer() {
+    private Observer clickObserver = new Observer() {
         @Override
         public void onSubscribe(Disposable d) {
 
@@ -77,18 +129,10 @@ public class LoopViewPager extends ViewPager {
 
         @Override
         public void onNext(Object value) {
-            if(pointView!=null&&getCount()!=0){
-                Message message = (Message) value;
-                int position = message.getPosition()%getCount();
-                float positionOffset = message.getPositionOffset();
-                if(position == getCount()-1){
-                    if(positionOffset>0.5)
-                        position = 0;
-                    positionOffset = 0;
-                }
-                pointView.setPercent(position+positionOffset);
-                pointView.invalidate();
-
+            if (onLoopPagerClickListener != null) {
+                onLoopPagerClickListener.setPosition(position);
+                if (beans != null && position < beans.size())
+                    onLoopPagerClickListener.setBean(beans.get(position));
             }
         }
 
@@ -117,156 +161,75 @@ public class LoopViewPager extends ViewPager {
         return isLoop;
     }
 
-    public void setLoop(boolean loop) {
+    public LoopViewPager setLoop(boolean loop) {
         isLoop = loop;
-        loopPagerAdapter = new LoopPagerAdapter(imageViews, isLoop, isAuto, autoTime);
-        setAdapter(loopPagerAdapter);
-        loopCheck();
+        return this;
     }
 
     public boolean isAuto() {
         return isAuto;
     }
 
-    public void setAuto(boolean auto) {
+    public LoopViewPager setAuto(boolean auto) {
         isAuto = auto;
-        autoPlay();
+        return this;
     }
 
     public int getAutoTime() {
         return autoTime;
     }
 
-    public void setAutoTime(int autoTime) {
+    public LoopViewPager setAutoTime(int autoTime) {
         this.autoTime = autoTime;
-        autoPlay();
+        return this;
     }
 
-    public int getCount(){
-        if(imageViews!=null)
+    public int getCount() {
+        if (imageViews != null)
             return imageViews.size();
         return 0;
     }
 
-    public int getDefaultCount() {
-        return defaultCount;
+    public int getImageScale() {
+        return imageScale;
     }
 
-    public void setDefaultCount(int defaultCount) {
-        if (defaultCount > 0) {
-            this.defaultCount = defaultCount;
-            imageResources.clear();
-            this.imageViews.clear();
-            for (int i = 0; i < defaultCount; i++)
-                imageResources.add(defaultResouces[i % defaultResouces.length]);
-            this.imageResources.addAll(imageResources);
-            for (int i = 0; i < imageResources.size(); i++) {
-                ImageView imageView = new ImageView(context);
-                imageView.setScaleType(imageType);
-                imageView.setImageResource(imageResources.get(i));
-                imageViews.add(imageView);
-            }
-
-            loopPagerAdapter.notifyDataSetChanged();
-            loopCheck();
-            if (pointView!=null)
-                pointView.setCount(getCount());
-        }
+    public LoopViewPager setImageScale(int imageScale) {
+        this.imageScale = imageScale;
+        return this;
     }
 
-    public ImageView.ScaleType getImageType() {
-        return imageType;
+    public List<LoopViewPagerBean> getBeans() {
+        return beans;
     }
 
-    public void setImageType(ImageView.ScaleType imageType) {
-        this.imageType = imageType;
-        for (int i = 0; i < imageViews.size(); i++) {
-            imageViews.get(i).setScaleType(this.imageType);
-        }
-
-        loopPagerAdapter.notifyDataSetChanged();
-        loopCheck();
+    public LoopViewPager setBeans(List<LoopViewPagerBean> beans) {
+        this.beans = beans;
+        return this;
     }
 
-    public List<Integer> getImageResources() {
-        return imageResources;
-    }
-
-    public void setImageResources(List<Integer> imageResources) {
-        this.imageViews.clear();
-        if (imageResources != null && imageResources.size() != 0) {
-            this.imageResources.clear();
-            this.imageResources.addAll(imageResources);
-            for (int i = 0; i < imageResources.size(); i++) {
-                ImageView imageView = new ImageView(context);
-                imageView.setScaleType(imageType);
-                imageView.setImageResource(imageResources.get(i));
-                imageViews.add(imageView);
-            }
-        } else {
-            ImageView imageView = new ImageView(context);
-            imageView.setScaleType(imageType);
-            imageView.setImageResource(this.imageResources.get(0));
-            imageViews.add(imageView);
-        }
-
-        loopPagerAdapter.notifyDataSetChanged();
-        loopCheck();
-        if (pointView!=null)
-            pointView.setCount(getCount());
-    }
-
-    public List<String> getImageString() {
-        return imageString;
-    }
-
-    public void setImageString(List<String> imageString) {
-        this.imageString = imageString;
-        imageViews.clear();
-        if (imageString != null && imageString.size() != 0) {
-            for (int i = 0; i < imageString.size(); i++) {
-                ImageView imageView = new ImageView(context);
-                imageView.setScaleType(imageType);
-                Picasso.get().load(imageString.get(i)).placeholder(imageResources.get(i % imageResources.size())).error(imageResources.get(i % imageResources.size())).into(imageView);
-                imageViews.add(imageView);
-            }
-        } else {
-            ImageView imageView = new ImageView(context);
-            imageView.setScaleType(imageType);
-            imageView.setImageResource(imageResources.get(0));
-            imageViews.add(imageView);
-        }
-
-        loopPagerAdapter.notifyDataSetChanged();
-        loopCheck();
-        if (pointView!=null)
-            pointView.setCount(getCount());
-    }
-
-    public int[] getDefaultResouces() {
-        return defaultResouces;
-    }
-
-    public void setDefaultResouces(int[] defaultResouces) {
-        if (defaultResouces.length != 0) {
+    public LoopViewPager setDefaultResouces(int[] defaultResouces) {
+        if (defaultResouces != null && defaultResouces.length != 0) {
             this.defaultResouces = defaultResouces;
-            imageResources.clear();
-            for (int i = 0; i < defaultResouces.length; i++) {
-                imageResources.add(defaultResouces[i]);
-            }
         }
-
+        return this;
     }
 
     public OnLoopPageChangeListener getPageChangeListener() {
         return onLoopPageChangeListener;
     }
 
-    public void setOnLoopPageChangeListener(OnLoopPageChangeListener onLoopPageChangeListener) {
+    public LoopViewPager setOnLoopPageChangeListener(OnLoopPageChangeListener onLoopPageChangeListener) {
         this.onLoopPageChangeListener = onLoopPageChangeListener;
-        onLoopPageChangeListener.setStateObserver(stateObserver);
-        onLoopPageChangeListener.setScrollObserver(scrollObserver);
+        onLoopPageChangeListener.setObserver(selectObserver);
         addOnPageChangeListener(this.onLoopPageChangeListener);
+        return this;
+    }
+
+    public LoopViewPager setOnLoopPagerClickListener(OnLoopPagerClickListener onLoopPagerClickListener) {
+        this.onLoopPagerClickListener = onLoopPagerClickListener;
+        this.onLoopPagerClickListener.setObserver(clickObserver);
+        return this;
     }
 
     public PointView getPointView() {
@@ -278,61 +241,68 @@ public class LoopViewPager extends ViewPager {
     }
 
     /*
-         * 初始化
-         */
+     * 初始化
+     */
     private void init(Context context) {
         this.context = context;
 
         //设置占位图片
-        for (int i = 0; i < defaultCount; i++)
-            imageResources.add(defaultResouces[i % defaultResouces.length]);
+        for (int i = 0; i < defaultCount; i++) {
+            LoopViewPagerBean bean = new LoopViewPagerBean();
+            bean.setResourceID(defaultResouces[i % defaultResouces.length]);
+            beans.add(bean);
+        }
+    }
 
-        for (int i = 0; i < imageResources.size(); i++) {
+    public void initialise() {
+
+        imageViews.clear();
+
+        if (beans != null && beans.size() != 0) {
+            for (int i = 0; i < beans.size(); i++) {
+                ImageView imageView = new ImageView(context);
+                loadImage(beans.get(i), imageView);
+                if(onLoopPagerClickListener!=null)
+                    imageView.setOnClickListener(onLoopPagerClickListener);
+                imageViews.add(imageView);
+            }
+        } else {
             ImageView imageView = new ImageView(context);
-            imageView.setScaleType(imageType);
-            imageView.setImageResource(imageResources.get(i));
+            LoopViewPagerBean bean = new LoopViewPagerBean();
+            bean.setResourceID(defaultResouces[0]);
+            loadImage(bean, imageView);
             imageViews.add(imageView);
         }
 
         loopPagerAdapter = new LoopPagerAdapter(imageViews, isLoop, isAuto, autoTime);
         setAdapter(loopPagerAdapter);
+        loopCheck();
+        autoPlay();
+
+        if (pointView != null)
+            pointView.setCount(getCount());
 
         //设置监听
-        onLoopPageChangeListener = new OnLoopPageChangeListener() {
-            @Override
-            protected void onViewPageSelected(int position) {
-
-            }
-
-            @Override
-            protected void onViewPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            protected void onViewPageScrollStateChanged(int state) {
-
-            }
-        };
         setOnLoopPageChangeListener(onLoopPageChangeListener);
+
     }
 
-    public void loopCheck(){
-        if(isLoop&&loopPagerAdapter.getCount() >3){
+    public void loopCheck() {
+        if (isLoop && loopPagerAdapter.getCount() > 3) {
             setCurrentItem(loopPagerAdapter.getCount() / 2, false);
-        }else{
+        } else {
             setCurrentItem(0, false);
         }
     }
 
-    public void autoPlay(){
+    public void autoPlay() {
 
-        if(disposable!=null&&!disposable.isDisposed())
+        if (disposable != null && !disposable.isDisposed())
             disposable.dispose();
 
-        if(isAuto){
+        if (isAuto) {
 
-            Observable.interval(autoTime,TimeUnit.SECONDS)
+            Observable.interval(autoTime, TimeUnit.SECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new Observer<Long>() {
                         @Override
@@ -343,8 +313,8 @@ public class LoopViewPager extends ViewPager {
                         @Override
                         public void onNext(Long value) {
                             int current = getCurrentItem();
-                            if(current+1 < loopPagerAdapter.getCount() && scroll_state == SCROLL_STATE_IDLE){
-                                setCurrentItem(current+1, true);
+                            if (current + 1 < loopPagerAdapter.getCount() && scroll_state == SCROLL_STATE_IDLE) {
+                                setCurrentItem(current + 1, true);
                             }
                         }
 
@@ -361,4 +331,39 @@ public class LoopViewPager extends ViewPager {
         }
     }
 
+    public void loadImage(LoopViewPagerBean bean, ImageView imageView) {
+        if (bean == null || imageView == null)
+            return;
+        String url = bean.getUrl();
+        int resourceID = bean.getResourceID();
+        if (!TextUtils.isEmpty(url)) {
+            switch (imageScale) {
+                case FIT_XY:
+                    Picasso.get().load(url).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+                    break;
+                case CENTER_INSIDE:
+                    Picasso.get().load(url).centerInside().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+                    break;
+                case CENTER_CROP:
+                    Picasso.get().load(url).centerCrop().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+                    break;
+                default:
+                    Picasso.get().load(url).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+            }
+        } else {
+            switch (imageScale) {
+                case FIT_XY:
+                    Picasso.get().load(resourceID).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+                    break;
+                case CENTER_INSIDE:
+                    Picasso.get().load(resourceID).centerInside().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+                    break;
+                case CENTER_CROP:
+                    Picasso.get().load(resourceID).centerCrop().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+                    break;
+                default:
+                    Picasso.get().load(resourceID).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
+            }
+        }
+    }
 }
