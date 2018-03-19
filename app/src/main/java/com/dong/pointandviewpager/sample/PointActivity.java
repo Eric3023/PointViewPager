@@ -26,7 +26,7 @@ public class PointActivity extends AppCompatActivity {
     private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
         @Override
         protected void onViewPageSelected(int position) {
-            Toast.makeText(PointActivity.this, "选中Position:"+position, Toast.LENGTH_SHORT).show();
+            Log.i("Dong", "选中Position:"+position);
         }
 
         @Override
@@ -43,7 +43,7 @@ public class PointActivity extends AppCompatActivity {
     private OnLoopPagerClickListener onLoopPagerClickListener = new OnLoopPagerClickListener() {
         @Override
         public void onLoopPagerClick(int position, LoopViewPagerBean bean) {
-            Toast.makeText(PointActivity.this, "点击Position:"+position, Toast.LENGTH_SHORT).show();
+            Log.i("Dong", "点击Position:"+position);
         }
     };
 
