@@ -99,7 +99,7 @@ resourceBeans.add(resourceBean4);
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
 #### 2.PonitViewPager的使用
-布局文件中添加LoopViewPager控件：
+布局文件中添加PointViewPager控件：
 
 ```xml
 <com.dong.pointviewpager.widget.PointViewPager
