@@ -1,9 +1,9 @@
 # PointViewPager
 ### 使用手册
-V2.0.0版本，修复了Out of Memory异常，添加点击监听，参数修改为链式调用，优化数据源的类型  
+
 
 github地址：https://github.com/Eric3023/PointViewPager
-#### 1.工程的build.gradle文件中添加依赖  
+### 1.工程的build.gradle文件中添加依赖  
 allprojects {
 
     repositories {  
@@ -14,11 +14,12 @@ allprojects {
 
 dependencies {
 
-    compile 'com.github.Eric3023:PointViewPager:v2.0.0'
+    compile 'com.github.Eric3023:PointViewPager:v2.1.0'
     
 }
 
-#### 2.LoopViewPager的使用
+### 2.控件使用
+#### 2.1 LoopViewPager
 
 布局文件中添加LoopViewPager控件：
 
@@ -98,7 +99,7 @@ resourceBeans.add(resourceBean4);
 ##### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
-#### 3.PonitViewPager的使用
+#### 2.2 PonitViewPager
 布局文件中添加PointViewPager控件：
 
 ```xml
@@ -116,36 +117,99 @@ PointViewPager pointViewPager = findViewById(R.id.pointViewPager);
 LoopViewPager loopViewPager = pointViewPager.getLoopViewPager();
 
 PointView pointView = pointViewPager.getPointView();
-//设置LoopViewPager（轮播图）的属性（方法参考上面）
+//设置LoopViewPager（轮播图）的属性（方法参考2.1,LoopViewPager的设置）
 initLoopViewPager(loopViewPager);
 //设置PointView（小圆点）的属性
 initPointView(pointView);
 ```
 ```java
 private void initPointView(PointView pointView) {
-   //设置未被选中时小圆点的颜色(默认白色)
-   pointView.setNfColor(Color.RED);
-   //设置选中时小圆点的演的（默认红色）
-   pointView.setfColor(Color.BLUE);
-   //设置距离控件底部的距离
-   pointView.setDisbottom(getResources().getDimension(R.dimen.x10));
-   //设置小圆点之间的间隔距离
-   pointView.setDistance(getResources().getDimension(R.dimen.x8));
-   //设置小圆点的半径
-   pointView.setRudis(getResources().getDimension(R.dimen.x3));
-   //设置小圆点的滑动方式（INSTANT_SCROLL或SMOOTH_SCROLL）
-   pointView.setScrollType(PointView.INSTANT_SCROLL);
-   pointView.setScrollType(PointView.SMOOTH_SCROLL);
+   pointView.setNfColor(Color.RED)//设置未被选中时小圆点的颜色(默认白色)
+            .setfColor(Color.BLUE)//设置选中时小圆点的演的（默认红色）
+            .setDisbottom(getResources().getDimension(R.dimen.x10))//设置距离控件底部的距离
+            .setDistance(getResources().getDimension(R.dimen.x8))//设置小圆点之间的间隔距离
+            .setRudis(getResources().getDimension(R.dimen.x3))//设置小圆点的半径
+            .setScrollType(PointView.SMOOTH_SCROLL)//设置小圆点的滑动方式（INSTANT_SCROLL或SMOOTH_SCROLL）
+            .initialise();
 }
 ```
 ##### 效果：
-SMOOTH_SCROLL
 
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
  
- INSTANT_SCROLL
- 
- 
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
 
+#### 2.3 GalleryViewPager
+
+布局文件
+
+```xml
+<com.dong.pointviewpager.widget.GalleryViewPager
+    android:id="@+id/galleryviewpager"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y120"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent">
+</com.dong.pointviewpager.widget.GalleryViewPager>
+```
+代码文件
+```java
+GalleryViewPager galleryViewPager = findViewById(R.id.galleryviewpager);
+LoopViewPager loopViewPager = galleryViewPager.getLoopViewPager();
+
+//设置Gallery中LoopViewPager的参数(方法同上2.1， LoopViewPager参数设置)
+initLoopViewPager(loopViewPager);
+//设置Gallery中其他参数
+initGalleryViewPager(galleryViewPager);
+```
+```java
+    private void initGalleryViewPager(GalleryViewPager galleryViewPager) {
+        galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x280))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
+                .setPageHeight(RelativeLayout.LayoutParams.MATCH_PARENT)//设置ViewPager的高度
+                .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
+                .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
+                .initialise();
+    }
+```
+效果：
+
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
+ 
+ 
+ #### 2.4 PointGalleryViewPager
+ 布局文件
+```xml
+<com.dong.pointviewpager.widget.PointGalleryViewPager
+    android:id="@+id/pointGalleryViewPager"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/y120"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+```
+代码文件
+```java
+//设置PointGallery中LoopViewPager的参数(方法同2.1)
+initLoopViewPager(loopViewPager);
+//设置PointGallery中PoitView的参数（方法同2.2）
+initPointView(pointView);
+//设置PointGallery中其他参数
+initGalleryViewPager(pointGalleryViewPager);
+```
+```
+private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
+   galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x280))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
+                .setPageHeight(RelativeLayout.LayoutParams.MATCH_PARENT)//设置ViewPager的高度
+                .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
+                .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
+                .initialise();
+    }
+```
+
+
+效果：
+
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/4.gif)
