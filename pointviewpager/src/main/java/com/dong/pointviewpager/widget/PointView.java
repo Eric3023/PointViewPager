@@ -20,7 +20,7 @@ import com.dong.pointviewpager.R;
 public class PointView extends View {
 
     private Context context;
-    private int count=5;//小圆点数量
+    private int count = 0;//小圆点数量
     private int nfColor;//未被选中时的颜色
     private int fColor;//被选中时的颜色
     private float distance;//圆点之间的间距
@@ -52,26 +52,29 @@ public class PointView extends View {
         nfColor = Color.WHITE;
         fColor = Color.RED;
         distance = getResources().getDimension(R.dimen.x10);
-        rudis= getResources().getDimension(R.dimen.x4);
-        disbottom=getResources().getDimension(R.dimen.x10);
+        rudis = getResources().getDimension(R.dimen.x4);
+        disbottom = getResources().getDimension(R.dimen.x10);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Paint nfPaint = new Paint();
-        nfPaint.setAntiAlias(false);
-        nfPaint.setColor(nfColor);
-        for (int i = 0; i < count; i++) {
-            canvas.drawCircle((distance+rudis*2)*i+distance/2+rudis, distance/2+rudis, rudis, nfPaint);
-        }
+        if (count != 0) {
+            Paint nfPaint = new Paint();
+            nfPaint.setAntiAlias(false);
+            nfPaint.setColor(nfColor);
+            for (int i = 0; i < count; i++) {
+                canvas.drawCircle((distance + rudis * 2) * i + distance / 2 + rudis, distance / 2 + rudis, rudis, nfPaint);
+            }
 
-        Paint fPaint = new Paint();
-        fPaint.setAntiAlias(false);
-        fPaint.setColor(fColor);
-        if(scrollType == PointView.INSTANT_SCROLL)
-            percent = Math.round(percent);
-        canvas.drawCircle((distance+rudis*2)*percent+distance/2+rudis, distance/2+rudis, rudis, fPaint);
+            Paint fPaint = new Paint();
+            fPaint.setAntiAlias(false);
+            fPaint.setColor(fColor);
+            if (scrollType == PointView.INSTANT_SCROLL)
+                percent = Math.round(percent);
+            canvas.drawCircle((distance + rudis * 2) * percent + distance / 2 + rudis, distance / 2 + rudis, rudis, fPaint);
+
+        }
     }
 
     @Override
@@ -89,7 +92,7 @@ public class PointView extends View {
         int heightSize = MeasureSpec.getSize(heightMeasureSpec);
 
         // 设置wrap_content的默认宽 / 高值
-        int mWidth = (int) ((distance + rudis*2)*count);
+        int mWidth = (int) ((distance + rudis * 2) * count);
         int mHeight = (int) (distance + rudis * 2 + disbottom);
 
         // 当布局参数设置为wrap_content时，设置默认值
@@ -102,39 +105,51 @@ public class PointView extends View {
         }
     }
 
-    public void setCount(int count) {
+    public PointView setCount(int count) {
         this.count = count;
+        return this;
     }
 
-    public void setNfColor(int nfColor) {
+    public PointView setNfColor(int nfColor) {
         this.nfColor = nfColor;
+        return this;
     }
 
-    public void setfColor(int fColor) {
+    public PointView setfColor(int fColor) {
         this.fColor = fColor;
+        return this;
     }
 
-    public void setDistance(float distance) {
+    public PointView setDistance(float distance) {
         this.distance = distance;
+        return this;
     }
 
-    public void setRudis(float rudis) {
+    public PointView setRudis(float rudis) {
         this.rudis = rudis;
+        return this;
     }
 
-    public void setDisbottom(float disbottom) {
+    public PointView setDisbottom(float disbottom) {
         this.disbottom = disbottom;
+        return this;
     }
 
-    public void setPercent(float percent) {
+    public PointView setPercent(float percent) {
         this.percent = percent;
+        return this;
     }
 
     public int getScrollType() {
         return scrollType;
     }
 
-    public void setScrollType(int scrollType) {
+    public PointView setScrollType(int scrollType) {
         this.scrollType = scrollType;
+        return this;
+    }
+
+    public void initialise() {
+
     }
 }

@@ -1,6 +1,7 @@
 package com.dong.pointviewpager.listener;
 
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.dong.pointviewpager.bean.ScrollBean;
 

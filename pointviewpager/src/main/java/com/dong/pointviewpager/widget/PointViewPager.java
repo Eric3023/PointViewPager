@@ -13,9 +13,9 @@ import android.widget.RelativeLayout;
 
 public class PointViewPager extends RelativeLayout {
 
-    private Context context;
-    private LoopViewPager loopViewPager;
-    private PointView pointView;
+    protected Context context;
+    protected LoopViewPager loopViewPager;
+    protected PointView pointView;
 
     public PointViewPager(@NonNull Context context) {
         super(context);
@@ -33,7 +33,7 @@ public class PointViewPager extends RelativeLayout {
 
     }
 
-    private void init(Context context) {
+    protected void init(Context context) {
         this.context = context;
         initViewPager(context);
         initPointView();
@@ -42,17 +42,18 @@ public class PointViewPager extends RelativeLayout {
     /*
      * 初始化LoopViewPager
      */
-    private void initViewPager(Context context) {
+    protected void initViewPager(Context context) {
         loopViewPager =  new LoopViewPager(context);
         RelativeLayout.LayoutParams lp= new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         loopViewPager.setLayoutParams(lp);
+        loopViewPager.initialise();
         addView(loopViewPager);
     }
 
     /*
      * 初始化小圆点
      */
-    private void initPointView() {
+    protected void initPointView() {
         pointView = new PointView(context);
         loopViewPager.setPointView(pointView);
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

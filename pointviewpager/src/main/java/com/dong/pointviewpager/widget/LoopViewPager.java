@@ -14,6 +14,7 @@ import com.dong.pointviewpager.bean.LoopViewPagerBean;
 import com.dong.pointviewpager.bean.ScrollBean;
 import com.dong.pointviewpager.listener.OnLoopPageChangeListener;
 import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
+import com.dong.pointviewpager.model.ResourceConfige;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class LoopViewPager extends ViewPager {
     private int imageScale = FIT_XY;//默认图片的伸缩模式
 
     private int defaultCount = 5;//默认显示的数量
-    private int[] defaultResouces = {R.drawable.bigimg1, R.drawable.bigimg2, R.drawable.bigimg3};//默认显示占位图片
+    private int[] defaultResouces = {ResourceConfige.resourceID0, ResourceConfige.resourceID1, ResourceConfige.resourceID2};//默认显示占位图片
 
     private List<LoopViewPagerBean> beans = new ArrayList<LoopViewPagerBean>();
     private List<ImageView> imageViews = new ArrayList<ImageView>();
@@ -185,8 +186,8 @@ public class LoopViewPager extends ViewPager {
     }
 
     public int getCount() {
-        if (imageViews != null)
-            return imageViews.size();
+        if (beans != null)
+            return beans.size();
         return 0;
     }
 
@@ -204,7 +205,12 @@ public class LoopViewPager extends ViewPager {
     }
 
     public LoopViewPager setBeans(List<LoopViewPagerBean> beans) {
-        this.beans = beans;
+        if(beans!=null&&beans.size()!=0){
+            this.beans = beans;
+        }else{
+            this.beans.clear();
+            this.beans.add(new LoopViewPagerBean(defaultResouces[0], null));
+        }
         return this;
     }
 
@@ -219,10 +225,13 @@ public class LoopViewPager extends ViewPager {
         return onLoopPageChangeListener;
     }
 
+    public LoopPagerAdapter getLoopPagerAdapter() {
+        return loopPagerAdapter;
+    }
+
     public LoopViewPager setOnLoopPageChangeListener(OnLoopPageChangeListener onLoopPageChangeListener) {
         this.onLoopPageChangeListener = onLoopPageChangeListener;
         onLoopPageChangeListener.setObserver(selectObserver);
-        addOnPageChangeListener(this.onLoopPageChangeListener);
         return this;
     }
 
@@ -241,8 +250,8 @@ public class LoopViewPager extends ViewPager {
     }
 
     /*
-     * 初始化
-     */
+         * 初始化
+         */
     private void init(Context context) {
         this.context = context;
 
@@ -252,29 +261,15 @@ public class LoopViewPager extends ViewPager {
             bean.setResourceID(defaultResouces[i % defaultResouces.length]);
             beans.add(bean);
         }
+
+        initialise();//显示默认效果
     }
 
     public void initialise() {
 
         imageViews.clear();
 
-        if (beans != null && beans.size() != 0) {
-            for (int i = 0; i < beans.size(); i++) {
-                ImageView imageView = new ImageView(context);
-                loadImage(beans.get(i), imageView);
-                if(onLoopPagerClickListener!=null)
-                    imageView.setOnClickListener(onLoopPagerClickListener);
-                imageViews.add(imageView);
-            }
-        } else {
-            ImageView imageView = new ImageView(context);
-            LoopViewPagerBean bean = new LoopViewPagerBean();
-            bean.setResourceID(defaultResouces[0]);
-            loadImage(bean, imageView);
-            imageViews.add(imageView);
-        }
-
-        loopPagerAdapter = new LoopPagerAdapter(imageViews, isLoop, isAuto, autoTime);
+        loopPagerAdapter = new LoopPagerAdapter(context, beans, imageScale, defaultResouces[0], onLoopPagerClickListener, isLoop, isAuto, autoTime);
         setAdapter(loopPagerAdapter);
         loopCheck();
         autoPlay();
@@ -283,8 +278,8 @@ public class LoopViewPager extends ViewPager {
             pointView.setCount(getCount());
 
         //设置监听
-        setOnLoopPageChangeListener(onLoopPageChangeListener);
-
+        onLoopPageChangeListener.setObserver(selectObserver);
+        addOnPageChangeListener(onLoopPageChangeListener);
     }
 
     public void loopCheck() {
@@ -331,39 +326,4 @@ public class LoopViewPager extends ViewPager {
         }
     }
 
-    public void loadImage(LoopViewPagerBean bean, ImageView imageView) {
-        if (bean == null || imageView == null)
-            return;
-        String url = bean.getUrl();
-        int resourceID = bean.getResourceID();
-        if (!TextUtils.isEmpty(url)) {
-            switch (imageScale) {
-                case FIT_XY:
-                    Picasso.get().load(url).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-                    break;
-                case CENTER_INSIDE:
-                    Picasso.get().load(url).centerInside().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-                    break;
-                case CENTER_CROP:
-                    Picasso.get().load(url).centerCrop().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-                    break;
-                default:
-                    Picasso.get().load(url).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-            }
-        } else {
-            switch (imageScale) {
-                case FIT_XY:
-                    Picasso.get().load(resourceID).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-                    break;
-                case CENTER_INSIDE:
-                    Picasso.get().load(resourceID).centerInside().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-                    break;
-                case CENTER_CROP:
-                    Picasso.get().load(resourceID).centerCrop().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-                    break;
-                default:
-                    Picasso.get().load(resourceID).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResouces[0]).error(defaultResouces[0]).into(imageView);
-            }
-        }
-    }
 }

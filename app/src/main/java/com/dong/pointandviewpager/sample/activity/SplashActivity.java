@@ -1,4 +1,4 @@
-package com.dong.pointandviewpager.sample;
+package com.dong.pointandviewpager.sample.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -22,10 +22,13 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
 
         Button btn_loop = findViewById(R.id.btn_loopviewpager);
         Button btn_point = findViewById(R.id.btn_pointviewpager);
+        Button btn_gallery = findViewById(R.id.btn_galleryviewpager);
+        Button btn_point_gallery = findViewById(R.id.btn_pointgalleryviewpager);
 
         btn_loop.setOnClickListener(this);
         btn_point.setOnClickListener(this);
-
+        btn_gallery.setOnClickListener(this);
+        btn_point_gallery.setOnClickListener(this);
     }
 
     @Override
@@ -37,6 +40,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btn_pointviewpager:
                 startActivity(PointActivity.class);
+                break;
+            case R.id.btn_galleryviewpager:
+                startActivity(GalleryActivity.class);
+                break;
+            case R.id.btn_pointgalleryviewpager:
+                startActivity(PointGalleryActivity.class);
                 break;
         }
     }

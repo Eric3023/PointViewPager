@@ -1,9 +1,14 @@
 package com.dong.pointviewpager.adapter;
 
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.dong.pointviewpager.bean.LoopViewPagerBean;
+import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
+import com.dong.pointviewpager.utils.ImageLoadUtil;
 
 import java.util.List;
 
@@ -13,13 +18,21 @@ import java.util.List;
 
 public class LoopPagerAdapter extends PagerAdapter {
 
-    private List<ImageView> mList;
+    private Context context;
+    private List<LoopViewPagerBean> beans;
+    private int imageScale;
+    private int defaultResource;
+    private OnLoopPagerClickListener onLoopPagerClickListener;
     private boolean isLoop;
     private boolean isAuto;
     private int mAutoTime;
 
-    public LoopPagerAdapter(List<ImageView> list, boolean isLoop, boolean isAuto, int mAutoTime) {
-        this.mList = list;
+    public LoopPagerAdapter(Context context, List<LoopViewPagerBean> list, int imageScale, int defaultResource, OnLoopPagerClickListener onLoopPagerClickListener, boolean isLoop, boolean isAuto, int mAutoTime) {
+        this.context = context;
+        this.beans = list;
+        this.imageScale = imageScale;
+        this.defaultResource = defaultResource;
+        this.onLoopPagerClickListener = onLoopPagerClickListener;
         this.isLoop = isLoop;
         this.isAuto = isAuto;
         this.mAutoTime = mAutoTime;
@@ -27,11 +40,11 @@ public class LoopPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        if(mList!=null)
-            if(isLoop&&mList.size()>3)
+        if(beans!=null)
+            if(isLoop)
                 return Integer.MAX_VALUE;
             else
-                return mList.size();
+                return beans.size();
         return 0;
     }
 
@@ -42,8 +55,12 @@ public class LoopPagerAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        container.addView(mList.get(position%mList.size()));
-        return mList.get(position%mList.size());
+        ImageView imageView = new ImageView(context);
+        if(beans!=null && beans.size()!=0)
+            ImageLoadUtil.loadImage(beans.get(position%beans.size()), imageView, imageScale, defaultResource);
+        imageView.setOnClickListener(onLoopPagerClickListener);
+        container.addView(imageView);
+        return imageView;
     }
 
     @Override
