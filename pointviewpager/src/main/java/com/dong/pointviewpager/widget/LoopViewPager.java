@@ -267,6 +267,8 @@ public class LoopViewPager extends ViewPager {
 
     public void initialise() {
 
+        setOffscreenPageLimit(4);
+
         imageViews.clear();
 
         loopPagerAdapter = new LoopPagerAdapter(context, beans, imageScale, defaultResouces[0], onLoopPagerClickListener, isLoop, isAuto, autoTime);

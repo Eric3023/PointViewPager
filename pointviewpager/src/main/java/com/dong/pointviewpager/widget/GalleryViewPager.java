@@ -76,7 +76,6 @@ public class GalleryViewPager extends RelativeLayout {
         loopViewPager =  new LoopViewPager(context){
             @Override
             public void initialise() {
-                setOffscreenPageLimit(4);
                 setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale));
                 super.initialise();
             }
