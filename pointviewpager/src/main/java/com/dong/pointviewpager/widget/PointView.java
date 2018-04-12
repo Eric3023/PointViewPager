@@ -110,6 +110,10 @@ public class PointView extends View {
         return this;
     }
 
+    public int getCount() {
+        return count;
+    }
+
     public PointView setNfColor(int nfColor) {
         this.nfColor = nfColor;
         return this;
