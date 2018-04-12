@@ -205,7 +205,7 @@ public class LoopViewPager extends ViewPager {
     }
 
     public LoopViewPager setBeans(List<LoopViewPagerBean> beans) {
-        if(beans!=null&&beans.size()!=0){
+        if(beans!=null){
             this.beans = beans;
         }else{
             this.beans.clear();
