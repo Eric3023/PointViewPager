@@ -28,6 +28,7 @@ public class LoopPagerAdapter extends PagerAdapter {
     private int mAutoTime;
 
     private int count;
+    public onDataChangedListener onDataChangedListener;
 
     public LoopPagerAdapter(Context context, List<LoopViewPagerBean> list, int imageScale, int defaultResource, OnLoopPagerClickListener onLoopPagerClickListener, boolean isLoop, boolean isAuto, int mAutoTime) {
         this.context = context;
@@ -38,6 +39,10 @@ public class LoopPagerAdapter extends PagerAdapter {
         this.isLoop = isLoop;
         this.isAuto = isAuto;
         this.mAutoTime = mAutoTime;
+    }
+
+    public void setOnDataChangedListener(LoopPagerAdapter.onDataChangedListener onDataChangedListener) {
+        this.onDataChangedListener = onDataChangedListener;
     }
 
     @Override
@@ -73,6 +78,7 @@ public class LoopPagerAdapter extends PagerAdapter {
     @Override
     public void notifyDataSetChanged() {
         count = getCount();
+        onDataChangedListener.onDataChanged();
         super.notifyDataSetChanged();
     }
 
@@ -83,5 +89,9 @@ public class LoopPagerAdapter extends PagerAdapter {
             return POSITION_NONE;
         }
         return super.getItemPosition(object);
+    }
+
+    public interface onDataChangedListener{
+        void onDataChanged();
     }
 }

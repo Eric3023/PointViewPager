@@ -30,7 +30,7 @@ import io.reactivex.disposables.Disposable;
  * Created by Dong on 2018/3/15.
  */
 
-public class LoopViewPager extends ViewPager {
+public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataChangedListener {
 
     private Context context;
     private boolean isLoop;//是否可以循环滑动
@@ -272,6 +272,7 @@ public class LoopViewPager extends ViewPager {
         imageViews.clear();
 
         loopPagerAdapter = new LoopPagerAdapter(context, beans, imageScale, defaultResouces[0], onLoopPagerClickListener, isLoop, isAuto, autoTime);
+        loopPagerAdapter.setOnDataChangedListener(this);
         setAdapter(loopPagerAdapter);
         loopCheck();
         autoPlay();
@@ -328,4 +329,10 @@ public class LoopViewPager extends ViewPager {
         }
     }
 
+    @Override
+    public void onDataChanged() {
+        if(pointView!=null){
+            pointView.setCount(getCount());
+        }
+    }
 }
