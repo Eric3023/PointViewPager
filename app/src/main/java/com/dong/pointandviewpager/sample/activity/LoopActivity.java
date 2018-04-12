@@ -32,7 +32,7 @@ public class LoopActivity extends AppCompatActivity {
                 .setAutoTime(5)//设置图片时间间隔
                 .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)//设置选中监听，替代addOnPageChangeListener方法
                 .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)//设置点击监听
-                .setBeans(new DataManager().getResourceBeans())//设置数据源
+                .setBeans(new DataManager().getUrlBeans())//设置数据源
                 .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
                 .initialise();//参数配置完成后，执行适配(必须执行，且必须最后一步执行)
     }
