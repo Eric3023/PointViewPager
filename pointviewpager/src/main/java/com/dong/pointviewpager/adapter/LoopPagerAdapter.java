@@ -27,6 +27,8 @@ public class LoopPagerAdapter extends PagerAdapter {
     private boolean isAuto;
     private int mAutoTime;
 
+    private int count;
+
     public LoopPagerAdapter(Context context, List<LoopViewPagerBean> list, int imageScale, int defaultResource, OnLoopPagerClickListener onLoopPagerClickListener, boolean isLoop, boolean isAuto, int mAutoTime) {
         this.context = context;
         this.beans = list;
@@ -66,5 +68,20 @@ public class LoopPagerAdapter extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         container.removeView((View) object);
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        count = getCount();
+        super.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getItemPosition(Object object) {
+        if(count>0){
+            count--;
+            return POSITION_NONE;
+        }
+        return super.getItemPosition(object);
     }
 }
