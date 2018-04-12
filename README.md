@@ -14,7 +14,7 @@ allprojects {
 
 dependencies {
 
-    compile 'com.github.Eric3023:PointViewPager:v2.1.0'
+    compile 'com.github.Eric3023:PointViewPager:v2.1.1'
     
 }
 
