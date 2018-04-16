@@ -23,9 +23,9 @@ public class PointView extends View {
     private int count = 0;//小圆点数量
     private int nfColor;//未被选中时的颜色
     private int fColor;//被选中时的颜色
-    private float distance;//圆点之间的间距
-    private float rudis;//圆点的半径
-    private float disbottom;//距离底部边缘的距离
+    public float distance;//圆点之间的间距
+    public float rudis;//圆点的半径
+    public float disbottom;//距离底部边缘的距离
 
     private float percent;//选中圆点的位置
     private int scrollType;
@@ -82,7 +82,6 @@ public class PointView extends View {
 
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
 
-
         // 获取宽-测量规则的模式和大小
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -103,6 +102,18 @@ public class PointView extends View {
         } else if (getLayoutParams().height == ViewGroup.LayoutParams.WRAP_CONTENT) {
             setMeasuredDimension(widthSize, mHeight);
         }
+    }
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public float getRudis() {
+        return rudis;
+    }
+
+    public float getDisbottom() {
+        return disbottom;
     }
 
     public PointView setCount(int count) {

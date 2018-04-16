@@ -45,6 +45,8 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     public static final int CENTER_CROP = 2;
     private int imageScale = FIT_XY;//默认图片的伸缩模式
 
+    private OnPagerCompleteListener onPagerCompleteListener;
+
     private int defaultCount = 5;//默认显示的数量
     private int[] defaultResouces = {ResourceConfige.resourceID0, ResourceConfige.resourceID1, ResourceConfige.resourceID2};//默认显示占位图片
 
@@ -147,6 +149,10 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
 
         }
     };
+
+    public void setOnPagerCompleteListener(OnPagerCompleteListener onPagerCompleteListener) {
+        this.onPagerCompleteListener = onPagerCompleteListener;
+    }
 
     public LoopViewPager(Context context) {
         super(context);
@@ -283,6 +289,9 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
         //设置监听
         onLoopPageChangeListener.setObserver(selectObserver);
         addOnPageChangeListener(onLoopPageChangeListener);
+
+        if(onPagerCompleteListener != null)
+            onPagerCompleteListener.onPagerComplete();
     }
 
     public void loopCheck() {
@@ -333,6 +342,11 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     public void onDataChanged() {
         if(pointView!=null){
             pointView.setCount(getCount());
+            onPagerCompleteListener.onPagerComplete();
         }
+    }
+
+    public interface OnPagerCompleteListener{
+        void onPagerComplete();
     }
 }
