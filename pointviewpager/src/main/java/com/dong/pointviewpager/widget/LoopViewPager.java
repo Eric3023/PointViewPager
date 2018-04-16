@@ -286,8 +286,8 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     }
 
     public void loopCheck() {
-        if (isLoop && loopPagerAdapter.getCount() > 3) {
-            setCurrentItem(loopPagerAdapter.getCount() / 2, false);
+        if (isLoop) {
+            setCurrentItem(getCount()*5, false);
         } else {
             setCurrentItem(0, false);
         }
