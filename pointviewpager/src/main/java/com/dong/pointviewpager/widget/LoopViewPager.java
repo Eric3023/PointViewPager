@@ -342,6 +342,8 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     public void onDataChanged() {
         if(pointView!=null){
             pointView.setCount(getCount());
+        }
+        if(onPagerCompleteListener!=null){
             onPagerCompleteListener.onPagerComplete();
         }
     }

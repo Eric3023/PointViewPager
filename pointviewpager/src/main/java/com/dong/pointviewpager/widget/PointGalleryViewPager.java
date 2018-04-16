@@ -78,6 +78,7 @@ public class PointGalleryViewPager extends PointViewPager {
                 super.initialise();
             }
         };
+        loopViewPager.setOnPagerCompleteListener(this);
         RelativeLayout.LayoutParams lp= new RelativeLayout.LayoutParams(pageWidth, pageHeight);
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
         loopViewPager.setLayoutParams(lp);

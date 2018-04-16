@@ -5,8 +5,6 @@
       <module fileurl="file://$PROJECT_DIR$/PointAndViewPager.iml" filepath="$PROJECT_DIR$/PointAndViewPager.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/PointViewPager.iml" filepath="$PROJECT_DIR$/.idea/PointViewPager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pointviewpager/pointviewpager.iml" filepath="$PROJECT_DIR$/pointviewpager/pointviewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/pointviewpager/pointviewpager.iml" filepath="$PROJECT_DIR$/pointviewpager/pointviewpager.iml" />
     </modules>
   </component>

@@ -78,7 +78,8 @@ public class LoopPagerAdapter extends PagerAdapter {
     @Override
     public void notifyDataSetChanged() {
         count = getCount();
-        onDataChangedListener.onDataChanged();
+        if(onDataChangedListener!=null)
+            onDataChangedListener.onDataChanged();
         super.notifyDataSetChanged();
     }
 

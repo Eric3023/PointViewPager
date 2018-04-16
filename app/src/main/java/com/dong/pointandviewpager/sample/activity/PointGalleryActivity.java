@@ -1,6 +1,8 @@
 package com.dong.pointandviewpager.sample.activity;
 
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
@@ -8,12 +10,17 @@ import android.widget.RelativeLayout;
 import com.dong.pointandviewpager.R;
 import com.dong.pointandviewpager.sample.model.DataManager;
 import com.dong.pointandviewpager.sample.model.ListenerManager;
+import com.dong.pointviewpager.bean.LoopViewPagerBean;
 import com.dong.pointviewpager.widget.GalleryViewPager;
 import com.dong.pointviewpager.widget.LoopViewPager;
 import com.dong.pointviewpager.widget.PointGalleryViewPager;
 import com.dong.pointviewpager.widget.PointView;
 
+import java.util.List;
+
 public class PointGalleryActivity extends AppCompatActivity {
+
+    private LoopViewPager loopViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +29,7 @@ public class PointGalleryActivity extends AppCompatActivity {
 
         PointGalleryViewPager pointGalleryViewPager = findViewById(R.id.pointGalleryViewPager);
 
-        LoopViewPager loopViewPager = pointGalleryViewPager.getLoopViewPager();
+        loopViewPager = pointGalleryViewPager.getLoopViewPager();
         PointView pointView = pointGalleryViewPager.getPointView();
 
         //设置PointGallery中LoopViewPager的参数
@@ -32,12 +39,24 @@ public class PointGalleryActivity extends AppCompatActivity {
         //设置PointGallery中其他参数
         initGalleryViewPager(pointGalleryViewPager);
 
+        handler.sendEmptyMessageDelayed(10, 1000*3);
+
     }
+
+    List<LoopViewPagerBean> beans = new DataManager().getUrlBeans();
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message message) {
+            beans.addAll(beans);
+            loopViewPager.initialise();
+            return false;
+        }
+    });
 
     private void initLoopViewPager(LoopViewPager loopViewPager) {
         loopViewPager.setAuto(false)
                 .setImageScale(LoopViewPager.FIT_XY)
-                .setBeans(new DataManager().getUrlBeans())
+                .setBeans(beans)
                 .setAutoTime(3)
                 .setDefaultResouces(new int[]{R.drawable.img0})
                 .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)
