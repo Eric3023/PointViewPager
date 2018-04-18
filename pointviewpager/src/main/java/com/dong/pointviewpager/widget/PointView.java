@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.dong.pointviewpager.R;
 
@@ -165,6 +166,12 @@ public class PointView extends View {
     }
 
     public void initialise() {
-
+        RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams)getLayoutParams();
+        // 获取高-测量规则的模式和大小
+        int mWidth = (int) ((distance + rudis * 2) * count);
+        int mHeight = (int) (distance + rudis * 2 + disbottom);
+        layoutParams.width = mWidth;
+        layoutParams.height = mHeight;
+        setLayoutParams(layoutParams);
     }
 }
