@@ -1,12 +1,9 @@
 package com.dong.pointviewpager.widget;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.dong.pointviewpager.R;
 import com.dong.pointviewpager.adapter.LoopPagerAdapter;
@@ -15,7 +12,6 @@ import com.dong.pointviewpager.bean.ScrollBean;
 import com.dong.pointviewpager.listener.OnLoopPageChangeListener;
 import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
 import com.dong.pointviewpager.model.ResourceConfige;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +48,11 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
 
     private List<LoopViewPagerBean> beans = new ArrayList<LoopViewPagerBean>();
     private List<ImageView> imageViews = new ArrayList<ImageView>();
+
+    private boolean isCard;
+    private float radius;
+    private float elevation;
+    private int padding;
 
     private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
         @Override
@@ -197,6 +198,30 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
         return 0;
     }
 
+    public LoopViewPager setCard(boolean card) {
+        isCard = card;
+        return this;
+    }
+
+    public LoopViewPager setCardRadius(float radius) {
+        this.radius = radius;
+        return this;
+    }
+
+    public LoopViewPager setCardElevation(float elevation) {
+        this.elevation = elevation;
+        return this;
+    }
+
+    public LoopViewPager setCardPadding(int padding) {
+        this.padding = padding;
+        return this;
+    }
+
+    public void setPosition(int position) {
+        this.position = position;
+    }
+
     public int getImageScale() {
         return imageScale;
     }
@@ -261,6 +286,9 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     private void init(Context context) {
         this.context = context;
 
+        this.radius = context.getResources().getDimension(R.dimen.x5);
+        this.elevation = context.getResources().getDimension(R.dimen.x10);
+
         //设置占位图片
         for (int i = 0; i < defaultCount; i++) {
             LoopViewPagerBean bean = new LoopViewPagerBean();
@@ -277,7 +305,8 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
 
         imageViews.clear();
 
-        loopPagerAdapter = new LoopPagerAdapter(context, beans, imageScale, defaultResouces[0], onLoopPagerClickListener, isLoop, isAuto, autoTime);
+        loopPagerAdapter = new LoopPagerAdapter(context, beans, imageScale, defaultResouces[0], onLoopPagerClickListener,
+                isLoop, isAuto, autoTime, isCard, radius, elevation, padding);
         loopPagerAdapter.setOnDataChangedListener(this);
         setAdapter(loopPagerAdapter);
         loopCheck();

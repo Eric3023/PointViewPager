@@ -36,6 +36,10 @@ public class GalleryActivity extends AppCompatActivity {
                 .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)
                 .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)
                 .setLoop(true)
+                .setCard(true)//设置是否是CardView
+                .setCardRadius(getResources().getDimension(R.dimen.x10))//设置CardView的圆角弧度
+                .setCardElevation(getResources().getDimension(R.dimen.x5))//设置CardView的阴影宽度
+                .setCardPadding(0)//设置CardView的Padding宽度
                 .initialise();
     }
 
