@@ -14,7 +14,7 @@ allprojects {
 
 dependencies {
 
-    compile 'com.github.Eric3023:PointViewPager:v2.1.1'
+    compile 'com.github.Eric3023:PointViewPager:v2.4.0'
     
 }
 
@@ -34,16 +34,20 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
 
 ```java
 //配置LoopViewPager参数
-LoopViewPager pager = findViewById(R.id.loopViewPager);
-pager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型 LoopViewPager.CENTER_INSIDE、CENTER_CROP、FIT_XY三种
-     .setLoop(false)//设置是否循环(图片数量大于3有效)
-     .setAuto(true)//设置是否自动播放
-     .setAutoTime(5)//设置图片自动播放的时间间隔
-     .setOnLoopPageChangeListener(onLoopPageChangeListener)//设置选中监听，替代addOnPageChangeListener方法
-     .setOnLoopPagerClickListener(onLoopPagerClickListener)//设置点击监听
-     .setBeans(resourceBeans)//设置数据源
-     .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
-     .initialise();//参数配置完成后，执行适配(必须执行，且必须最后一步执行)
+        LoopViewPager pager = findViewById(R.id.loopViewPager);
+        pager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型
+                .setLoop(false)//设置是否循环(图片数量大于3有效)
+                .setAuto(true)//设置是否自动播放
+                .setAutoTime(5)//设置图片时间间隔
+                .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)//设置选中监听
+                .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)//设置点击监听
+                .setBeans(new DataManager().getUrlBeans())//设置数据源
+                .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
+                .setCard(true)//设置是否是CardView
+                .setCardRadius(getResources().getDimension(R.dimen.x10))//设置CardView的圆角弧度
+                .setCardElevation(getResources().getDimension(R.dimen.x5))//设置CardView的阴影宽度
+                .setCardPadding((int) getResources().getDimension(R.dimen.x3))//设置CardView的Padding宽度
+                .initialise();//参数配置完成后，执行适配(必须执行，且必须最后一步执行)
 ```
 
 选中监听（OnLoopPageChangeListener）和点击监听（OnLoopPagerClickListener）
@@ -94,8 +98,10 @@ resourceBeans.add(resourceBean2);
 resourceBeans.add(resourceBean3);
 resourceBeans.add(resourceBean4);
 ```
-
-
+//数据源发生改变时
+```java
+loopViewPager.getAdapter().notifyDataSetChanged();
+````
 ##### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
@@ -117,8 +123,10 @@ PointViewPager pointViewPager = findViewById(R.id.pointViewPager);
 LoopViewPager loopViewPager = pointViewPager.getLoopViewPager();
 
 PointView pointView = pointViewPager.getPointView();
+
 //设置LoopViewPager（轮播图）的属性（方法参考2.1,LoopViewPager的设置）
 initLoopViewPager(loopViewPager);
+
 //设置PointView（小圆点）的属性
 initPointView(pointView);
 ```
@@ -133,8 +141,12 @@ private void initPointView(PointView pointView) {
             .initialise();
 }
 ```
-##### 效果：
 
+//数据源发生改变时
+```java
+loopViewPager.getAdapter().notifyDataSetChanged();
+````
+##### 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
  
@@ -161,6 +173,7 @@ LoopViewPager loopViewPager = galleryViewPager.getLoopViewPager();
 
 //设置Gallery中LoopViewPager的参数(方法同上2.1， LoopViewPager参数设置)
 initLoopViewPager(loopViewPager);
+
 //设置Gallery中其他参数
 initGalleryViewPager(galleryViewPager);
 ```
@@ -173,6 +186,12 @@ initGalleryViewPager(galleryViewPager);
                 .initialise();
     }
 ```
+
+//数据源发生改变时
+```java
+loopViewPager.getAdapter().notifyDataSetChanged();
+````
+
 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
@@ -208,8 +227,10 @@ private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
                 .initialise();
     }
 ```
-
-
+//数据源发生改变时
+```java
+loopViewPager.getAdapter().notifyDataSetChanged();
+````
 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/4.gif)
