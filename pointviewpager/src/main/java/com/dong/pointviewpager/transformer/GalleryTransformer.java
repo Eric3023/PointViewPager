@@ -42,12 +42,12 @@ public class GalleryTransformer implements ViewPager.PageTransformer  {
         view.setAlpha(pageAlpha);
 
         if(position > 1 && position <-1){
-            view.setScaleX(pageScale);
+            //view.setScaleX(pageScale);
             view.setScaleY(pageScale);
             view.setAlpha(pageAlpha);
         }else{
             float scaleFactor = Math.max(pageScale, 1 - Math.abs(position));
-            view.setScaleX(scaleFactor);
+            //view.setScaleX(scaleFactor);
             view.setScaleY(scaleFactor);
 
             float alpha=1-Math.abs(position);
