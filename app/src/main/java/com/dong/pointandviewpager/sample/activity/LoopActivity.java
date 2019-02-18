@@ -19,14 +19,16 @@ import java.util.List;
 
 public class LoopActivity extends AppCompatActivity {
 
+    private LoopViewPager pager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         //配置LoopViewPager参数
-        LoopViewPager pager = findViewById(R.id.loopViewPager);
-        pager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型
+        pager = findViewById(R.id.loopViewPager);
+        pager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
                 .setLoop(false)//设置是否循环(图片数量大于3有效)
                 .setAuto(true)//设置是否自动播放
                 .setAutoTime(5)//设置图片时间间隔
@@ -39,5 +41,11 @@ public class LoopActivity extends AppCompatActivity {
                 .setCardElevation(getResources().getDimension(R.dimen.x5))//设置CardView的阴影宽度
                 .setCardPadding((int) getResources().getDimension(R.dimen.x3))//设置CardView的Padding宽度
                 .initialise();//参数配置完成后，执行适配(必须执行，且必须最后一步执行)
+    }
+
+    @Override
+    protected void onDestroy() {
+        pager.destoryViewPager();
+        super.onDestroy();
     }
 }

@@ -13,13 +13,15 @@ import com.dong.pointviewpager.widget.LoopViewPager;
 
 public class GalleryActivity extends AppCompatActivity {
 
+    private LoopViewPager loopViewPager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
 
         GalleryViewPager galleryViewPager = findViewById(R.id.galleryviewpager);
-        LoopViewPager loopViewPager = galleryViewPager.getLoopViewPager();
+        loopViewPager = galleryViewPager.getLoopViewPager();
 
         //设置Gallery中LoopViewPager的参数
         initLoopViewPager(loopViewPager);
@@ -49,6 +51,12 @@ public class GalleryActivity extends AppCompatActivity {
                 .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
                 .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
                 .initialise();
+    }
+
+    @Override
+    protected void onDestroy() {
+        loopViewPager.destoryViewPager();
+        super.onDestroy();
     }
 
 }

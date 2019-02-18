@@ -61,7 +61,7 @@ public class PointActivity extends AppCompatActivity {
 
     private void initLoopViewPager(LoopViewPager loopViewPager) {
         //配置LoopViewPager参数
-        loopViewPager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型
+        loopViewPager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
                 .setLoop(true)//设置是否循环(图片数量大于3有效)
                 .setAuto(false)//设置是否自动播放
                 .setAutoTime(5)//设置图片时间间隔
@@ -85,5 +85,11 @@ public class PointActivity extends AppCompatActivity {
                 .setRudis(getResources().getDimension(R.dimen.x3))//设置小圆点的半径
                 .setScrollType(PointView.SMOOTH_SCROLL)//设置小圆点的滑动方式（INSTANT_SCROLL或SMOOTH_SCROLL）
                 .initialise();
+    }
+
+    @Override
+    protected void onDestroy() {
+        loopViewPager.destoryViewPager();
+        super.onDestroy();
     }
 }

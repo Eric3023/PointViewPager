@@ -3,6 +3,7 @@ package com.dong.pointviewpager.widget;
 import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.dong.pointviewpager.R;
@@ -37,7 +38,7 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     private LoopPagerAdapter loopPagerAdapter;//ViewPager适配器
 
     public static final int FIT_XY = 0;
-    public static final int CENTER_INSIDE = 1;
+    public static final int FIT_CENTER = 1;
     public static final int CENTER_CROP = 2;
     private int imageScale = FIT_XY;//默认图片的伸缩模式
 
@@ -348,6 +349,7 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
 
                         @Override
                         public void onNext(Long value) {
+                            Log.i("Dong","计时");
                             int current = getCurrentItem();
                             if (current + 1 < loopPagerAdapter.getCount() && scroll_state == SCROLL_STATE_IDLE) {
                                 setCurrentItem(current + 1, true);
@@ -380,4 +382,8 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     public interface OnPagerCompleteListener{
         void onPagerComplete();
     }
+
+    public void destoryViewPager(){
+        if (disposable != null && !disposable.isDisposed())
+            disposable.dispose();    }
 }

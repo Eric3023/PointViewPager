@@ -24,7 +24,7 @@ public class ImageLoadUtil {
                 case LoopViewPager.FIT_XY:
                     Picasso.get().load(url).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResource).error(defaultResource).into(imageView);
                     break;
-                case LoopViewPager.CENTER_INSIDE:
+                case LoopViewPager.FIT_CENTER:
                     Picasso.get().load(url).centerInside().fit().config(Bitmap.Config.RGB_565).placeholder(defaultResource).error(defaultResource).into(imageView);
                     break;
                 case LoopViewPager.CENTER_CROP:
@@ -38,7 +38,7 @@ public class ImageLoadUtil {
                 case LoopViewPager.FIT_XY:
                     Picasso.get().load(resourceID).fit().config(Bitmap.Config.RGB_565).placeholder(defaultResource).error(defaultResource).into(imageView);
                     break;
-                case LoopViewPager.CENTER_INSIDE:
+                case LoopViewPager.FIT_CENTER:
                     Picasso.get().load(resourceID).fit().centerInside().config(Bitmap.Config.RGB_565).placeholder(defaultResource).error(defaultResource).into(imageView);
                     break;
                 case LoopViewPager.CENTER_CROP:

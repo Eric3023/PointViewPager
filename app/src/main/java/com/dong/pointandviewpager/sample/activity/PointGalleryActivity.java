@@ -86,4 +86,10 @@ public class PointGalleryActivity extends AppCompatActivity {
                 .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
                 .initialise();
     }
+
+    @Override
+    protected void onDestroy() {
+        loopViewPager.destoryViewPager();
+        super.onDestroy();
+    }
 }
