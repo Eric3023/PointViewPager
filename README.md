@@ -102,7 +102,15 @@ resourceBeans.add(resourceBean4);
 ```java
 loopViewPager.getAdapter().notifyDataSetChanged();
 ````
-##### 效果：
+//页面关闭是调用destoryViewPager()：
+```java
+@Override
+protected void onDestroy() {
+loopViewPager.destoryViewPager();
+super.onDestroy();
+    }
+```
+ ##### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
 #### 2.2 PonitViewPager
@@ -146,6 +154,15 @@ private void initPointView(PointView pointView) {
 ```java
 loopViewPager.getAdapter().notifyDataSetChanged();
 ````
+//页面关闭是调用destoryViewPager()：
+```java
+@Override
+protected void onDestroy() {
+loopViewPager.destoryViewPager();
+super.onDestroy();
+    }
+```
+
 ##### 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
@@ -231,6 +248,15 @@ private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
 ```java
 loopViewPager.getAdapter().notifyDataSetChanged();
 ````
+//页面关闭是调用destoryViewPager()：
+```java
+@Override
+protected void onDestroy() {
+loopViewPager.destoryViewPager();
+super.onDestroy();
+    }
+```
+
 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/4.gif)
