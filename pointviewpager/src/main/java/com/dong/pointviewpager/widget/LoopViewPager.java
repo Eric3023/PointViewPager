@@ -45,7 +45,7 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     private OnPagerCompleteListener onPagerCompleteListener;
 
     private int defaultCount = 5;//默认显示的数量
-    private int[] defaultResouces = {ResourceConfige.resourceID0, ResourceConfige.resourceID1, ResourceConfige.resourceID2};//默认显示占位图片
+    private int[] defaultResouces = {ResourceConfige.resourceID, ResourceConfige.resourceID, ResourceConfige.resourceID};//默认显示占位图片
 
     private List<LoopViewPagerBean> beans = new ArrayList<LoopViewPagerBean>();
     private List<ImageView> imageViews = new ArrayList<ImageView>();
