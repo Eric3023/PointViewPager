@@ -106,9 +106,9 @@ loopViewPager.getAdapter().notifyDataSetChanged();
 ```java
 @Override
 protected void onDestroy() {
-loopViewPager.destoryViewPager();
-super.onDestroy();
-    }
+    loopViewPager.destoryViewPager();
+    super.onDestroy();
+}
 ```
  ##### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
@@ -158,9 +158,9 @@ loopViewPager.getAdapter().notifyDataSetChanged();
 ```java
 @Override
 protected void onDestroy() {
-loopViewPager.destoryViewPager();
-super.onDestroy();
-    }
+    loopViewPager.destoryViewPager();
+    super.onDestroy();
+}
 ```
 
 ##### 效果：
@@ -208,7 +208,14 @@ initGalleryViewPager(galleryViewPager);
 ```java
 loopViewPager.getAdapter().notifyDataSetChanged();
 ````
-
+//页面关闭是调用destoryViewPager()：
+```java
+@Override
+protected void onDestroy() {
+    loopViewPager.destoryViewPager();
+    super.onDestroy();
+}
+```
 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
@@ -252,9 +259,9 @@ loopViewPager.getAdapter().notifyDataSetChanged();
 ```java
 @Override
 protected void onDestroy() {
-loopViewPager.destoryViewPager();
-super.onDestroy();
-    }
+    loopViewPager.destoryViewPager();
+    super.onDestroy();
+}
 ```
 
 效果：
