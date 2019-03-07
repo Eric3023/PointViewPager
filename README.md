@@ -253,7 +253,7 @@ private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
 ```
 //数据源发生改变时
 ```java
-loopViewPager.getAdapter().notifyDataSetChanged();
+loopViewPager.initialise();
 ````
 //页面关闭是调用destoryViewPager()：
 ```java
