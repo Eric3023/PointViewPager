@@ -349,7 +349,6 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
 
                         @Override
                         public void onNext(Long value) {
-                            Log.i("Dong","计时");
                             int current = getCurrentItem();
                             if (current + 1 < loopPagerAdapter.getCount() && scroll_state == SCROLL_STATE_IDLE) {
                                 setCurrentItem(current + 1, true);
