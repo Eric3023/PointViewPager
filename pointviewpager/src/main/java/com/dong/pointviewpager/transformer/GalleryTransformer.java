@@ -1,8 +1,10 @@
 package com.dong.pointviewpager.transformer;
 
+import android.graphics.PixelFormat;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 
 /**
  * Created by Dong on 2018/3/19.
@@ -13,13 +15,15 @@ public class GalleryTransformer implements ViewPager.PageTransformer  {
 
     private  float pageAlpha;
     private  float pageScale;
+    private  float pageCenterScale;
 
     public GalleryTransformer() {
     }
 
-    public GalleryTransformer(float pageAlpha, float pageScale) {
+    public GalleryTransformer(float pageAlpha, float pageScale, float pageCenterScale) {
         this.pageAlpha = pageAlpha;
         this.pageScale = pageScale;
+        this.pageCenterScale = pageCenterScale;
     }
 
     public float getPageAlpha() {
@@ -42,12 +46,12 @@ public class GalleryTransformer implements ViewPager.PageTransformer  {
         view.setAlpha(pageAlpha);
 
         if(position > 1 && position <-1){
-            //view.setScaleX(pageScale);
+            view.setScaleX(pageScale);
             view.setScaleY(pageScale);
             view.setAlpha(pageAlpha);
         }else{
-            float scaleFactor = Math.max(pageScale, 1 - Math.abs(position));
-            //view.setScaleX(scaleFactor);
+            float scaleFactor = Math.max(pageScale, pageCenterScale - Math.abs(position));
+            view.setScaleX(scaleFactor);
             view.setScaleY(scaleFactor);
 
             float alpha=1-Math.abs(position);

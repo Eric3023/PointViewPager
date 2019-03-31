@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.SparseArray;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.dong.pointviewpager.R;
@@ -15,6 +17,7 @@ import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
 import com.dong.pointviewpager.model.ResourceConfige;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -281,9 +284,41 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
         this.pointView = pointView;
     }
 
+    private ArrayList<Integer> childCenterXAbs = new ArrayList<>();
+    private SparseArray<Integer> childIndex = new SparseArray<>();
+
+    //设置选中的最后绘制
+    @Override
+    protected int getChildDrawingOrder(int childCount, int n) {
+        if (n == 0 || childIndex.size() != childCount) {
+            childCenterXAbs.clear();
+            childIndex.clear();
+            int viewCenterX = getViewCenterX(this);
+            for (int i = 0; i < childCount; ++i) {
+                int indexAbs = Math.abs(viewCenterX - getViewCenterX(getChildAt(i)));
+                //两个距离相同，后来的那个做自增，从而保持abs不同
+                if (childIndex.get(indexAbs) != null) {
+                    ++indexAbs;
+                }
+                childCenterXAbs.add(indexAbs);
+                childIndex.append(indexAbs, i);
+            }
+            Collections.sort(childCenterXAbs);//1,0,2  0,1,2
+        }
+        //那个item距离中心点远一些，就先draw它。（最近的就是中间放大的item,最后draw）
+        return childIndex.get(childCenterXAbs.get(childCount - 1 - n));
+    }
+
+    //设置选中的最后绘制
+    private int getViewCenterX(View view) {
+        int[] array = new int[2];
+        view.getLocationOnScreen(array);
+        return array[0] + view.getWidth() / 2;
+    }
+
     /*
-         * 初始化
-         */
+     * 初始化
+     */
     private void init(Context context) {
         this.context = context;
 

@@ -63,8 +63,8 @@ public class PointGalleryActivity extends AppCompatActivity {
                 .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)
                 .setLoop(true)
                 .setCard(true)//设置是否是CardView
-                .setCardRadius(getResources().getDimension(R.dimen.x10))//设置CardView的圆角弧度
-                .setCardElevation(getResources().getDimension(R.dimen.x5))//设置CardView的阴影宽度
+                .setCardRadius(getResources().getDimension(R.dimen.x1))//设置CardView的圆角弧度
+                .setCardElevation(getResources().getDimension(R.dimen.x1))//设置CardView的阴影宽度
                 .setCardPadding(0)//设置CardView的Padding宽度
                 .initialise();
     }
@@ -81,7 +81,8 @@ public class PointGalleryActivity extends AppCompatActivity {
 
     private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
         galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x240))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
-                .setPageHeight(RelativeLayout.LayoutParams.MATCH_PARENT)//设置ViewPager的高度
+                .setPageHeight((int) (getResources().getDimension(R.dimen.y150)/1.2))//设置ViewPager的高度，原高度/PageCenterScale
+                .setPageCenterScale((float) 1.2)
                 .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
                 .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
                 .initialise();
