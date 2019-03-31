@@ -195,13 +195,14 @@ initLoopViewPager(loopViewPager);
 initGalleryViewPager(galleryViewPager);
 ```
 ```java
-private void initGalleryViewPager(GalleryViewPager galleryViewPager) {
-     galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x280))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
-          .setPageHeight(RelativeLayout.LayoutParams.MATCH_PARENT)//设置ViewPager的高度
-          .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
-          .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
-          .initialise();
-}
+    private void initGalleryViewPager(GalleryViewPager galleryViewPager) {
+        galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x240))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
+                .setPageHeight((int) (getResources().getDimension(R.dimen.y150)/1.2))//设置ViewPager的高度，原高度/PageCenterScale
+                .setPageCenterScale((float) 1.2)//设置ViewPager的高度
+                .setPageScale((float) 1.0)//设置两侧隐藏页面的缩放比例
+                .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
+                .initialise();
+    }
 ```
 
 //数据源发生改变时
@@ -243,9 +244,10 @@ initPointView(pointView);
 initGalleryViewPager(pointGalleryViewPager);
 ```
 ```
-private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
-   galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x280))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
-                .setPageHeight(RelativeLayout.LayoutParams.MATCH_PARENT)//设置ViewPager的高度
+    private void initGalleryViewPager(PointGalleryViewPager galleryViewPager) {
+        galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x240))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
+                .setPageHeight((int) (getResources().getDimension(R.dimen.y150)/1.2))//设置ViewPager的高度，原高度/PageCenterScale
+                .setPageCenterScale((float) 1.2)
                 .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
                 .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
                 .initialise();
