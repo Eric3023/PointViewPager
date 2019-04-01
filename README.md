@@ -220,7 +220,7 @@ protected void onDestroy() {
 ```
 效果：
 
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/3.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF1.gif)
  
  
  #### 2.4 PointGalleryViewPager
@@ -270,7 +270,7 @@ protected void onDestroy() {
 
 效果：
 
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/4.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF2.gif)
  
 #### 2.5 OverCardViewPager
 
@@ -305,3 +305,7 @@ pager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
 ```java
 loopViewPager.getAdapter().notifyDataSetChanged();
 ````
+
+效果：
+
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF3.gif)
