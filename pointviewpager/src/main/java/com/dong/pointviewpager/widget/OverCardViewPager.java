@@ -14,6 +14,7 @@ import com.dong.pointviewpager.bean.ScrollBean;
 import com.dong.pointviewpager.listener.OnLoopPageChangeListener;
 import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
 import com.dong.pointviewpager.model.ResourceConfige;
+import com.dong.pointviewpager.transformer.OverCardTransformer;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -33,10 +34,7 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
 
     private Context context;
     private boolean isLoop;//是否可以循环滑动
-    private boolean isAuto;//是否可以自动滑动
     private int scroll_state;//滑动状态
-    private int autoTime = 3;//自动播放间隔，单位为秒
-    private Disposable disposable;
     private LoopPagerAdapter loopPagerAdapter;//ViewPager适配器
 
     public static final int FIT_XY = 0;
@@ -56,6 +54,7 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
     private float radius;
     private float elevation;
     private int padding;
+    private float mOffset;
 
     private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
         @Override
@@ -168,30 +167,22 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
         init(context);
     }
 
+    public float getmOffset() {
+        return mOffset;
+    }
+
+    public OverCardViewPager setmOffset(float mOffset) {
+        this.mOffset = mOffset;
+        setPadding(0, 0 ,0, (int) mOffset);
+        return this;
+    }
+
     public boolean isLoop() {
         return isLoop;
     }
 
     public OverCardViewPager setLoop(boolean loop) {
         isLoop = loop;
-        return this;
-    }
-
-    public boolean isAuto() {
-        return isAuto;
-    }
-
-    public OverCardViewPager setAuto(boolean auto) {
-        isAuto = auto;
-        return this;
-    }
-
-    public int getAutoTime() {
-        return autoTime;
-    }
-
-    public OverCardViewPager setAutoTime(int autoTime) {
-        this.autoTime = autoTime;
         return this;
     }
 
@@ -286,35 +277,6 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
     private ArrayList<Integer> childCenterXAbs = new ArrayList<>();
     private SparseArray<Integer> childIndex = new SparseArray<>();
 
-    //设置选中的最后绘制
-    @Override
-    protected int getChildDrawingOrder(int childCount, int n) {
-        if (n == 0 || childIndex.size() != childCount) {
-            childCenterXAbs.clear();
-            childIndex.clear();
-            int viewCenterX = getViewCenterX(this);
-            for (int i = 0; i < childCount; ++i) {
-                int indexAbs = Math.abs(viewCenterX - getViewCenterX(getChildAt(i)));
-                //两个距离相同，后来的那个做自增，从而保持abs不同
-                if (childIndex.get(indexAbs) != null) {
-                    ++indexAbs;
-                }
-                childCenterXAbs.add(indexAbs);
-                childIndex.append(indexAbs, i);
-            }
-            Collections.sort(childCenterXAbs);//1,0,2  0,1,2
-        }
-        //那个item距离中心点远一些，就先draw它。（最近的就是中间放大的item,最后draw）
-        return childIndex.get(childCenterXAbs.get(childCount - 1 - n));
-    }
-
-    //设置选中的最后绘制
-    private int getViewCenterX(View view) {
-        int[] array = new int[2];
-        view.getLocationOnScreen(array);
-        return array[0] + view.getWidth() / 2;
-    }
-
     /*
      * 初始化
      */
@@ -323,6 +285,10 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
 
         this.radius = context.getResources().getDimension(R.dimen.x5);
         this.elevation = context.getResources().getDimension(R.dimen.x10);
+        this.mOffset = context.getResources().getDimension(R.dimen.y5);
+
+        setPadding(0, 0 ,0, (int) mOffset);
+        setClipToPadding(false);
 
         //设置占位图片
         for (int i = 0; i < defaultCount; i++) {
@@ -336,16 +302,17 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
 
     public void initialise() {
 
+        setPageTransformer(true, new OverCardTransformer(mOffset));
+
         setOffscreenPageLimit(4);
 
         imageViews.clear();
 
         loopPagerAdapter = new LoopPagerAdapter(context, beans, imageScale, defaultResouces[0], onLoopPagerClickListener,
-                isLoop, isAuto, autoTime, isCard, radius, elevation, padding);
+                isLoop, false, 0, isCard, radius, elevation, padding);
         loopPagerAdapter.setOnDataChangedListener(this);
         setAdapter(loopPagerAdapter);
         loopCheck();
-        autoPlay();
 
         if (pointView != null)
             pointView.setCount(getCount());
@@ -366,42 +333,6 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
         }
     }
 
-    public void autoPlay() {
-
-        if (disposable != null && !disposable.isDisposed())
-            disposable.dispose();
-
-        if (isAuto) {
-
-            Observable.interval(autoTime, TimeUnit.SECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new Observer<Long>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            disposable = d;
-                        }
-
-                        @Override
-                        public void onNext(Long value) {
-                            int current = getCurrentItem();
-                            if (current + 1 < loopPagerAdapter.getCount() && scroll_state == SCROLL_STATE_IDLE) {
-                                setCurrentItem(current + 1, true);
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
-
-                        }
-                    });
-        }
-    }
-
     @Override
     public void onDataChanged() {
         if(pointView!=null){
@@ -416,7 +347,4 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
         void onPagerComplete();
     }
 
-    public void destoryViewPager(){
-        if (disposable != null && !disposable.isDisposed())
-            disposable.dispose();    }
 }
