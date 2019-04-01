@@ -27,7 +27,8 @@ public class GalleryViewPager extends RelativeLayout {
     private float pageAlpha = (float) 0.5;//隐藏页卡的透明度
     private float pageScale = (float) 0.8; //隐藏页卡的缩放比例
 
-    private float pageCenterSacle = (float) 1.2;//中间页卡的放大比例
+    private float pageDistance = 0;//两侧页卡缩紧的距离
+    private float pageRotation; // 两侧页卡倾斜的角度
 
     public GalleryViewPager(@NonNull Context context) {
         super(context);
@@ -64,8 +65,14 @@ public class GalleryViewPager extends RelativeLayout {
         return this;
     }
 
-    public GalleryViewPager setPageCenterScale(float pageCenterSacle) {
-        this.pageCenterSacle = pageCenterSacle;
+    public GalleryViewPager setPageDistance(float pageDistance) {
+        this.pageDistance = pageDistance;
+        return this;
+    }
+
+
+    public GalleryViewPager setPagerRotation(float pageRotation) {
+        this.pageRotation = pageRotation;
         return this;
     }
 
@@ -83,7 +90,7 @@ public class GalleryViewPager extends RelativeLayout {
         loopViewPager =  new LoopViewPager(context){
             @Override
             public void initialise() {
-                setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageCenterSacle));
+                setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageDistance, pageRotation));
                 super.initialise();
             }
         };
@@ -103,7 +110,7 @@ public class GalleryViewPager extends RelativeLayout {
             lp.height = pageHeight;
             loopViewPager.setLayoutParams(lp);
 
-            loopViewPager.setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageCenterSacle));
+            loopViewPager.setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageDistance, pageRotation));
         }
     }
 }

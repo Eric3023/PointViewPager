@@ -24,11 +24,13 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         Button btn_point = findViewById(R.id.btn_pointviewpager);
         Button btn_gallery = findViewById(R.id.btn_galleryviewpager);
         Button btn_point_gallery = findViewById(R.id.btn_pointgalleryviewpager);
+        Button btn_overCard= findViewById(R.id.btn_overcardviewpager);
 
         btn_loop.setOnClickListener(this);
         btn_point.setOnClickListener(this);
         btn_gallery.setOnClickListener(this);
         btn_point_gallery.setOnClickListener(this);
+        btn_overCard.setOnClickListener(this);
     }
 
     @Override
@@ -46,6 +48,9 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 break;
             case R.id.btn_pointgalleryviewpager:
                 startActivity(PointGalleryActivity.class);
+                break;
+            case R.id.btn_overcardviewpager:
+                startActivity(OverCardActivity.class);
                 break;
         }
     }

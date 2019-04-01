@@ -21,7 +21,8 @@
         <activity android:name=".sample.activity.LoopActivity" />
         <activity android:name=".sample.activity.PointActivity" />
         <activity android:name=".sample.activity.GalleryActivity" />
-        <activity android:name=".sample.activity.PointGalleryActivity"></activity>
+        <activity android:name=".sample.activity.PointGalleryActivity"/>
+        <activity android:name=".sample.activity.OverCardActivity"/>
     </application>
 
 </manifest>

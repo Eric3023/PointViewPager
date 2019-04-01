@@ -22,7 +22,8 @@ public class PointGalleryViewPager extends PointViewPager {
 
     private float pageAlpha;//隐藏页卡的透明度
     private float pageScale; //隐藏页卡的缩放比例
-    private float pageCenterScale;//中间页卡的方法比例
+    private float pageDistance;//两侧页卡的缩紧距离
+    private float pageRotation;//两侧页卡的倾斜角度
 
     public PointGalleryViewPager(@NonNull Context context) {
         super(context);
@@ -57,8 +58,13 @@ public class PointGalleryViewPager extends PointViewPager {
         return  this;
     }
 
-    public PointGalleryViewPager setPageCenterScale(float pageCenterScale) {
-        this.pageCenterScale = pageCenterScale;
+    public PointGalleryViewPager setPageDistance(float pageDistance) {
+        this.pageDistance = pageDistance;
+        return this;
+    }
+
+    public PointGalleryViewPager setPageRotation(float pageRotation) {
+        this.pageRotation = pageRotation;
         return this;
     }
 
@@ -80,12 +86,12 @@ public class PointGalleryViewPager extends PointViewPager {
             @Override
             public void initialise() {
                 setOffscreenPageLimit(4);
-                setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageCenterScale));
+                setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageDistance,pageRotation));
                 super.initialise();
             }
         };
         loopViewPager.setOnPagerCompleteListener(this);
-        RelativeLayout.LayoutParams lp= new RelativeLayout.LayoutParams(pageWidth, (int) (getMeasuredHeight()/pageCenterScale));
+        RelativeLayout.LayoutParams lp= new RelativeLayout.LayoutParams(pageWidth, (int) (getMeasuredHeight()));
         lp.addRule(RelativeLayout.CENTER_IN_PARENT);
         loopViewPager.setLayoutParams(lp);
         loopViewPager.setClipChildren(false);
@@ -100,8 +106,8 @@ public class PointGalleryViewPager extends PointViewPager {
             lp.height = pageHeight;
             loopViewPager.setLayoutParams(lp);
 
-            Log.i("Dong", "pageCenterScale:" + pageCenterScale);
-            loopViewPager.setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageCenterScale));
+            Log.i("Dong", "pageCenterScale:" + pageDistance);
+            loopViewPager.setPageTransformer(true, new GalleryTransformer(pageAlpha, pageScale, pageDistance, pageRotation));
         }
     }
 }

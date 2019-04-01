@@ -47,10 +47,11 @@ public class GalleryActivity extends AppCompatActivity {
 
     private void initGalleryViewPager(GalleryViewPager galleryViewPager) {
         galleryViewPager.setPageWidth((int) getResources().getDimension(R.dimen.x240))//设置ViewPager的宽度，适当小于GalleryViewPager的宽度
-                .setPageHeight((int) (getResources().getDimension(R.dimen.y150)/1.2))//设置ViewPager的高度，原高度/PageCenterScale
-                .setPageCenterScale((float) 1.2)//设置ViewPager的高度
-                .setPageScale((float) 1.0)//设置两侧隐藏页面的缩放比例
+                .setPageHeight((int) (getResources().getDimension(R.dimen.y150)))//设置ViewPager的高度
+                .setPageDistance((int) (getResources().getDimension(R.dimen.x50)))//设置两侧页卡的缩进距离
+                .setPageScale((float) 0.8)//设置两侧隐藏页面的缩放比例
                 .setPageAlpha((float) 0.5)//设置两侧隐藏页面的透明度
+                .setPagerRotation(20)//设置两侧页卡的倾斜角度
                 .initialise();
     }
 

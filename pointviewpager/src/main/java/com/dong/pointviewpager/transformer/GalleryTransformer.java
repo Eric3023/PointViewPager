@@ -13,17 +13,19 @@ import android.view.WindowManager;
 public class GalleryTransformer implements ViewPager.PageTransformer  {
 
 
-    private  float pageAlpha;
-    private  float pageScale;
-    private  float pageCenterScale;
+    private float pageAlpha;
+    private float pageScale;
+    private float pageDistance;
+    private float pageRotation;
 
     public GalleryTransformer() {
     }
 
-    public GalleryTransformer(float pageAlpha, float pageScale, float pageCenterScale) {
+    public GalleryTransformer(float pageAlpha, float pageScale, float pageCenterScale, float pageRotation) {
         this.pageAlpha = pageAlpha;
         this.pageScale = pageScale;
-        this.pageCenterScale = pageCenterScale;
+        this.pageDistance = pageCenterScale;
+        this.pageRotation = pageRotation;
     }
 
     public float getPageAlpha() {
@@ -49,13 +51,19 @@ public class GalleryTransformer implements ViewPager.PageTransformer  {
             view.setScaleX(pageScale);
             view.setScaleY(pageScale);
             view.setAlpha(pageAlpha);
+            view.setTranslationX(0);
+            view.setRotationY(0);
         }else{
-            float scaleFactor = Math.max(pageScale, pageCenterScale - Math.abs(position));
+            float scaleFactor = Math.max(pageScale, 1 - Math.abs(position));
             view.setScaleX(scaleFactor);
             view.setScaleY(scaleFactor);
 
             float alpha=1-Math.abs(position);
             view.setAlpha(Math.max(pageAlpha, alpha));
+
+            view.setTranslationX(- pageDistance* position);
+
+            view.setRotationY( - pageRotation * position);
         }
     }
 }
