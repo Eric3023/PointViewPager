@@ -271,3 +271,37 @@ protected void onDestroy() {
 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/4.gif)
+ 
+#### 2.5 OverCardViewPager
+
+布局文件中添加OverCardViewPager控件：
+
+```xml
+    <com.dong.pointviewpager.widget.OverCardViewPager
+        android:id="@+id/overCardViewPager"
+        android:layout_width="@dimen/x200"
+        android:layout_height="@dimen/y200" />
+```
+
+java代码中设置控件的属性,根据需要设置部分属性，不用全部设置
+
+```java
+//配置OverCardViewPager参数
+pager = findViewById(R.id.overCardViewPager);
+pager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
+        .setLoop(true)//设置是否循环(图片数量大于3有效)
+        .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)//设置选中监听，替代addOnPageChangeListener方法
+        .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)//设置点击监听
+        .setBeans(new DataManager().getUrlBeans())//设置数据源
+        .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
+        .setCard(true)//设置是否是CardView
+        .setCardRadius(getResources().getDimension(R.dimen.x1))//设置CardView的圆角弧度
+        .setCardElevation(getResources().getDimension(R.dimen.x2))//设置CardView的阴影宽度
+        .setCardPadding((int) getResources().getDimension(R.dimen.x2))//设置CardView的Padding宽度
+        .setmOffset(getResources().getDimension(R.dimen.y5))//设置重叠卡片的下移距离
+        .initialise();//参数配置完成后，执行适配(必须执行，且必须最后一步执行)
+```
+//数据源发生改变时
+```java
+loopViewPager.getAdapter().notifyDataSetChanged();
+````
