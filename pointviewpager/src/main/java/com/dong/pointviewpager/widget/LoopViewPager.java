@@ -39,11 +39,7 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
     private int autoTime = 3;//自动播放间隔，单位为秒
     private Disposable disposable;
     private LoopPagerAdapter loopPagerAdapter;//ViewPager适配器
-
-    public static final int FIT_XY = 0;
-    public static final int FIT_CENTER = 1;
-    public static final int CENTER_CROP = 2;
-    private int imageScale = FIT_XY;//默认图片的伸缩模式
+    private ImageView.ScaleType imageScale = ImageView.ScaleType.FIT_XY;//默认图片的伸缩模式
 
     private OnPagerCompleteListener onPagerCompleteListener;
 
@@ -226,11 +222,11 @@ public class LoopViewPager extends ViewPager implements LoopPagerAdapter.onDataC
         this.position = position;
     }
 
-    public int getImageScale() {
+    public ImageView.ScaleType getImageScale() {
         return imageScale;
     }
 
-    public LoopViewPager setImageScale(int imageScale) {
+    public LoopViewPager setImageScale(ImageView.ScaleType imageScale) {
         this.imageScale = imageScale;
         return this;
     }

@@ -28,7 +28,7 @@ public class LoopActivity extends AppCompatActivity {
 
         //配置LoopViewPager参数
         pager = findViewById(R.id.loopViewPager);
-        pager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
+        pager.setImageScale(ImageView.ScaleType.FIT_CENTER)//修改视图的填充类型
                 .setLoop(false)//设置是否循环(图片数量大于3有效)
                 .setAuto(true)//设置是否自动播放
                 .setAutoTime(5)//设置图片时间间隔

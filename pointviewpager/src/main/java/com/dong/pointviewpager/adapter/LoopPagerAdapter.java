@@ -1,6 +1,7 @@
 package com.dong.pointviewpager.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.dong.pointviewpager.utils.ImageLoadUtil;
 
 import java.util.List;
 
+import me.panpf.sketch.SketchImageView;
+
 /**
  * Created by Dong on 2018/3/13.
  */
@@ -22,7 +25,7 @@ public class LoopPagerAdapter extends PagerAdapter {
 
     private Context context;
     private List<LoopViewPagerBean> beans;
-    private int imageScale;
+    private ImageView.ScaleType imageScale;
     private int defaultResource;
     private OnLoopPagerClickListener onLoopPagerClickListener;
     private boolean isLoop;
@@ -35,7 +38,7 @@ public class LoopPagerAdapter extends PagerAdapter {
     private int count;
     public onDataChangedListener onDataChangedListener;
 
-    public LoopPagerAdapter(Context context, List<LoopViewPagerBean> list, int imageScale, int defaultResource, OnLoopPagerClickListener onLoopPagerClickListener,
+    public LoopPagerAdapter(Context context, List<LoopViewPagerBean> list, ImageView.ScaleType imageScale, int defaultResource, OnLoopPagerClickListener onLoopPagerClickListener,
                             boolean isLoop, boolean isAuto, int mAutoTime, boolean isCard, float radius, float elevation, int padding) {
         this.context = context;
         this.beans = list;
@@ -75,16 +78,17 @@ public class LoopPagerAdapter extends PagerAdapter {
             cardView.setRadius(radius);
             cardView.setCardElevation(elevation);
             cardView.setContentPadding(padding, padding, padding, padding);
-            ImageView imageView = cardView.findViewById(R.id.item_page_imageview);
+            SketchImageView imageView = cardView.findViewById(R.id.item_page_imageview);
             if (beans != null && beans.size() != 0)
-                ImageLoadUtil.loadImage(beans.get(position % beans.size()), imageView, imageScale, defaultResource);
+                ImageLoadUtil.loadImage(context, beans.get(position % beans.size()), imageView, defaultResource);
             imageView.setOnClickListener(onLoopPagerClickListener);
             container.addView(cardView);
             return cardView;
         } else {
-            ImageView imageView = new ImageView(context);
+            SketchImageView imageView = new SketchImageView(context);
+            imageView.setScaleType(imageScale);
             if (beans != null && beans.size() != 0)
-                ImageLoadUtil.loadImage(beans.get(position % beans.size()), imageView, imageScale, defaultResource);
+                ImageLoadUtil.loadImage(context, beans.get(position % beans.size()), imageView, defaultResource);
             imageView.setOnClickListener(onLoopPagerClickListener);
             container.addView(imageView);
             return imageView;

@@ -2,6 +2,7 @@ package com.dong.pointandviewpager.sample.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dong.pointandviewpager.R;
@@ -31,14 +32,14 @@ public class GalleryActivity extends AppCompatActivity {
 
     private void initLoopViewPager(LoopViewPager loopViewPager) {
         loopViewPager.setAuto(false)
-                .setImageScale(LoopViewPager.FIT_XY)
+                .setImageScale(ImageView.ScaleType.FIT_XY)
                 .setBeans(new DataManager().getUrlBeans())
                 .setAutoTime(3)
                 .setDefaultResouces(new int[]{R.drawable.img0})
                 .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)
                 .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)
                 .setLoop(true)
-                .setCard(true)//设置是否是CardView
+                .setCard(false)//设置是否是CardView
                 .setCardRadius(getResources().getDimension(R.dimen.x1))//设置CardView的圆角弧度
                 .setCardElevation(getResources().getDimension(R.dimen.x1))//设置CardView的阴影宽度
                 .setCardPadding(0)//设置CardView的Padding宽度

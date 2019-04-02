@@ -61,7 +61,7 @@ public class PointActivity extends AppCompatActivity {
 
     private void initLoopViewPager(LoopViewPager loopViewPager) {
         //配置LoopViewPager参数
-        loopViewPager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
+        loopViewPager.setImageScale(ImageView.ScaleType.FIT_CENTER)//修改视图的填充类型
                 .setLoop(true)//设置是否循环(图片数量大于3有效)
                 .setAuto(false)//设置是否自动播放
                 .setAutoTime(5)//设置图片时间间隔
@@ -69,7 +69,7 @@ public class PointActivity extends AppCompatActivity {
                 .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)//设置点击监听
                 .setBeans(beans)//设置数据源
                 .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
-                .setCard(true)//设置是否是CardView
+                .setCard(false)//设置是否是CardView
                 .setCardRadius(getResources().getDimension(R.dimen.x10))//设置CardView的圆角弧度
                 .setCardElevation(getResources().getDimension(R.dimen.x5))//设置CardView的阴影宽度
                 .setCardPadding((int) getResources().getDimension(R.dimen.x3))//设置CardView的Padding宽度
