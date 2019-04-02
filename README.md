@@ -20,10 +20,10 @@ dependencies {
 
 布局文件中添加LoopViewPager控件：
 ```xml
-<com.dong.pointviewpager.widget.LoopViewPager
-    android:id="@+id/loopViewPager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"/>
+        <com.dong.pointviewpager.widget.LoopViewPager
+            android:id="@+id/loopViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 ```
 
 java代码中设置控件的属性,根据需要设置部分属性，不用全部设置
@@ -74,33 +74,34 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
 
 数据源beans是个集合（List<LoopViewPagerBean>），LoopViewPagerBean包含Object object、String url、int resourceID三个参数，Object根据项目自行设定类型，url为图片的url路径，一般由object的getxxx方法获得，也可自行设置，resourceID为图片的资源路径（url和resourceID，优先选择URL作为数据源）
 
-
 举例说明数据源的初始化：
 ```java
-//数据源
-
-List<LoopViewPagerBean> resourceBeans = new ArrayList<LoopViewPagerBean>();
-LoopViewPagerBean resourceBean1 = new LoopViewPagerBean(R.drawable.img0, null);
-LoopViewPagerBean resourceBean2 = new LoopViewPagerBean(R.drawable.img1, null);
-LoopViewPagerBean resourceBean3 = new LoopViewPagerBean(R.drawable.img2, null);
-LoopViewPagerBean resourceBean4 = new LoopViewPagerBean(R.drawable.img0, null);
-resourceBeans.add(resourceBean1);
-resourceBeans.add(resourceBean2);
-resourceBeans.add(resourceBean3);
-resourceBeans.add(resourceBean4);
+        //数据源
+        List<LoopViewPagerBean> resourceBeans = new ArrayList<LoopViewPagerBean>();
+        LoopViewPagerBean resourceBean1 = new LoopViewPagerBean(R.drawable.img0, null);
+        LoopViewPagerBean resourceBean2 = new LoopViewPagerBean(R.drawable.img1, null);
+        LoopViewPagerBean resourceBean3 = new LoopViewPagerBean(R.drawable.img2, null);
+        LoopViewPagerBean resourceBean4 = new LoopViewPagerBean(R.drawable.img0, null);
+        resourceBeans.add(resourceBean1);
+        resourceBeans.add(resourceBean2);
+        resourceBeans.add(resourceBean3);
+        resourceBeans.add(resourceBean4);
 ```
+
 //数据源发生改变时
 ```java
-loopViewPager.getAdapter().notifyDataSetChanged();
+        loopViewPager.getAdapter().notifyDataSetChanged();
 ````
+
 //页面关闭是调用destoryViewPager()：
 ```java
-@Override
-protected void onDestroy() {
-    loopViewPager.destoryViewPager();
-    super.onDestroy();
-}
+        @Override
+        protected void onDestroy() {
+            loopViewPager.destoryViewPager();
+            super.onDestroy();
+        }
 ```
+
  ##### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
