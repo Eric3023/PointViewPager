@@ -1,4 +1,5 @@
 # PointViewPager
+
 ### 使用手册
 github地址：https://github.com/Eric3023/PointViewPager
 
@@ -18,7 +19,6 @@ dependencies {
 #### 2.1 LoopViewPager
 
 布局文件中添加LoopViewPager控件：
-
 ```xml
 <com.dong.pointviewpager.widget.LoopViewPager
     android:id="@+id/loopViewPager"
@@ -27,7 +27,6 @@ dependencies {
 ```
 
 java代码中设置控件的属性,根据需要设置部分属性，不用全部设置
-
 ```java
         //配置LoopViewPager参数
         LoopViewPager pager = findViewById(R.id.loopViewPager);
@@ -47,35 +46,31 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
 ```
 
 选中监听（OnLoopPageChangeListener）和点击监听（OnLoopPagerClickListener）
-
-
 ```java
-    private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
-        @Override
-        protected void onViewPageSelected(int position) {
-            Log.i("Dong", "选中Position:"+position);
-        }
+        private OnLoopPageChangeListener onLoopPageChangeListener = new OnLoopPageChangeListener() {
+            @Override
+            protected void onViewPageSelected(int position) {
+                Log.i("Dong", "选中Position:"+position);
+            }
 
-        @Override
-        protected void onViewPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            @Override
+            protected void onViewPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        }
+            }
 
-        @Override
-        protected void onViewPageScrollStateChanged(int state) {
+            @Override
+            protected void onViewPageScrollStateChanged(int state) {
 
-        }
-    };
+            }
+        };
 
-    private OnLoopPagerClickListener onLoopPagerClickListener = new OnLoopPagerClickListener() {
-        @Override
-        public void onLoopPagerClick(int position, LoopViewPagerBean bean) {
-            Log.i("Dong", "点击Position:"+position);
-        }
-    };
-
+        private OnLoopPagerClickListener onLoopPagerClickListener = new OnLoopPagerClickListener() {
+            @Override
+            public void onLoopPagerClick(int position, LoopViewPagerBean bean) {
+                Log.i("Dong", "点击Position:"+position);
+            }
+        };
 ```
-
 
 数据源beans是个集合（List<LoopViewPagerBean>），LoopViewPagerBean包含Object object、String url、int resourceID三个参数，Object根据项目自行设定类型，url为图片的url路径，一般由object的getxxx方法获得，也可自行设置，resourceID为图片的资源路径（url和resourceID，优先选择URL作为数据源）
 
