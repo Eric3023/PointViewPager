@@ -36,11 +36,7 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
     private boolean isLoop;//是否可以循环滑动
     private int scroll_state;//滑动状态
     private LoopPagerAdapter loopPagerAdapter;//ViewPager适配器
-
-    public static final int FIT_XY = 0;
-    public static final int FIT_CENTER = 1;
-    public static final int CENTER_CROP = 2;
-    private int imageScale = FIT_XY;//默认图片的伸缩模式
+    private ImageView.ScaleType imageScale = ImageView.ScaleType.FIT_XY;//默认图片的伸缩模式
 
     private OnPagerCompleteListener onPagerCompleteListener;
 
@@ -216,11 +212,11 @@ public class OverCardViewPager extends ViewPager implements LoopPagerAdapter.onD
         this.position = position;
     }
 
-    public int getImageScale() {
+    public ImageView.ScaleType getImageScale() {
         return imageScale;
     }
 
-    public OverCardViewPager setImageScale(int imageScale) {
+    public OverCardViewPager setImageScale(ImageView.ScaleType imageScale) {
         this.imageScale = imageScale;
         return this;
     }

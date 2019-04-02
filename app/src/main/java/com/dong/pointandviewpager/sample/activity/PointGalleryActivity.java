@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.dong.pointandviewpager.R;
@@ -55,7 +56,7 @@ public class PointGalleryActivity extends AppCompatActivity {
 
     private void initLoopViewPager(LoopViewPager loopViewPager) {
         loopViewPager.setAuto(false)
-                .setImageScale(LoopViewPager.FIT_XY)
+                .setImageScale(ImageView.ScaleType.FIT_CENTER)
                 .setBeans(beans)
                 .setAutoTime(3)
                 .setDefaultResouces(new int[]{R.drawable.img0})

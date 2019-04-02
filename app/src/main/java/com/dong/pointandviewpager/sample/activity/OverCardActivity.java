@@ -2,6 +2,7 @@ package com.dong.pointandviewpager.sample.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 
 import com.dong.pointandviewpager.R;
 import com.dong.pointandviewpager.sample.model.DataManager;
@@ -20,7 +21,7 @@ public class OverCardActivity extends AppCompatActivity {
 
         //配置OverCardViewPager参数
         pager = findViewById(R.id.overCardViewPager);
-        pager.setImageScale(LoopViewPager.FIT_CENTER)//修改视图的填充类型
+        pager.setImageScale(ImageView.ScaleType.FIT_XY)//修改视图的填充类型
                 .setLoop(true)//设置是否循环(图片数量大于3有效)
                 .setOnLoopPageChangeListener(ListenerManager.onLoopPageChangeListener)//设置选中监听，替代addOnPageChangeListener方法
                 .setOnLoopPagerClickListener(ListenerManager.onLoopPagerClickListener)//设置点击监听
