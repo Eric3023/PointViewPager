@@ -1,22 +1,18 @@
 # PointViewPager
 ### 使用手册
-
-
 github地址：https://github.com/Eric3023/PointViewPager
-### 1.工程的build.gradle文件中添加依赖  
-allprojects {
 
+### 1.工程的build.gradle文件中添加依赖
+```xml
+allprojects {
     repositories {  
         maven { url 'https://jitpack.io' }  
     }
 }
-
-
 dependencies {
-
-    compile 'com.github.Eric3023:PointViewPager:v2.4.5'
-    
+    compile 'com.github.Eric3023:PointViewPager:v2.4.5'   
 }
+```
 
 ### 2.控件使用
 #### 2.1 LoopViewPager
