@@ -101,7 +101,7 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
 ```
 
  #### 效果：
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF1.gif)
 
 ### 2.2 PonitViewPager
 
@@ -155,7 +155,7 @@ java代码中设置控件的属性
 
 #### 效果：
 
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF2.gif)
  
 #### 2.3 GalleryViewPager
 
@@ -211,7 +211,7 @@ java代码中设置控件的属性
 ```
 
 #### 效果：
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF1.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF3.gif)
  
  
  ### 2.4 PointGalleryViewPager
@@ -264,7 +264,7 @@ java代码中设置控件的属性
 ```
 
 #### 效果：
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF2.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/gif4.gif)
  
 ### 2.5 OverCardViewPager
 
@@ -300,4 +300,4 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
 ````
 
 #### 效果：
- ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF3.gif)
+ ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/gif5.gif)
