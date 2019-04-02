@@ -1,9 +1,7 @@
-# PointViewPager
-
-### 使用手册
+# 使用手册
 github地址：https://github.com/Eric3023/PointViewPager
 
-### 1.工程的build.gradle文件中添加依赖
+## 1.工程的build.gradle文件中添加依赖
 ```xml
 allprojects {
     repositories {  
@@ -15,8 +13,8 @@ dependencies {
 }
 ```
 
-### 2.控件使用
-#### 2.1 LoopViewPager
+## 2.控件使用
+### 2.1 LoopViewPager
 
 布局文件中添加LoopViewPager控件：
 ```xml
@@ -102,10 +100,10 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
         }
 ```
 
- ##### 效果：
+ #### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/1.gif)
 
-#### 2.2 PonitViewPager
+### 2.2 PonitViewPager
 
 布局文件中添加PointViewPager控件：
 ```xml
@@ -155,7 +153,7 @@ java代码中设置控件的属性
         }
 ```
 
-##### 效果：
+#### 效果：
 
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/2.gif)
  
@@ -212,11 +210,11 @@ java代码中设置控件的属性
         }
 ```
 
-效果：
+#### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF1.gif)
  
  
- #### 2.4 PointGalleryViewPager
+ ### 2.4 PointGalleryViewPager
  
  布局文件
 ```xml
@@ -265,10 +263,10 @@ java代码中设置控件的属性
         }
 ```
 
-效果：
+#### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF2.gif)
  
-#### 2.5 OverCardViewPager
+### 2.5 OverCardViewPager
 
 布局文件中添加OverCardViewPager控件：
 ```xml
@@ -301,5 +299,5 @@ java代码中设置控件的属性,根据需要设置部分属性，不用全部
         loopViewPager.getAdapter().notifyDataSetChanged();
 ````
 
-效果：
+#### 效果：
  ![image](https://github.com/Eric3023/PointViewPager/blob/master/app/screenshoot/GIF3.gif)
