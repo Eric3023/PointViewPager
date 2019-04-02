@@ -33,7 +33,7 @@ dependencies {
 java代码中设置控件的属性,根据需要设置部分属性，不用全部设置
 
 ```java
-//配置LoopViewPager参数
+        //配置LoopViewPager参数
         LoopViewPager pager = findViewById(R.id.loopViewPager);
         pager.setImageScale(LoopViewPager.CENTER_INSIDE)//修改视图的填充类型
                 .setLoop(false)//设置是否循环(图片数量大于3有效)
