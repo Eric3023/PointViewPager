@@ -28,7 +28,7 @@ public class OverCardActivity extends AppCompatActivity {
                 .setBeans(new DataManager().getUrlBeans())//设置数据源
                 .setDefaultResouces(new int[]{R.drawable.img1})//设置默认显示的占位图
                 .setCard(true)//设置是否是CardView
-                .setCardRadius(getResources().getDimension(R.dimen.x2))//设置CardView的圆角弧度
+                .setCardRadius(getResources().getDimension(R.dimen.x3))//设置CardView的圆角弧度
                 .setCardElevation(getResources().getDimension(R.dimen.x2))//设置CardView的阴影宽度
                 .setCardPadding((int) getResources().getDimension(R.dimen.x2))//设置CardView的Padding宽度
                 .setmOffset(getResources().getDimension(R.dimen.y10))//设置重叠卡片的下移距离

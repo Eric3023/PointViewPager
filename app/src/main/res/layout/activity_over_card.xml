@@ -8,7 +8,7 @@
 
     <com.dong.pointviewpager.widget.OverCardViewPager
         android:id="@+id/overCardViewPager"
-        android:layout_width="@dimen/x200"
+        android:layout_width="@dimen/x270"
         android:layout_height="@dimen/y200"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

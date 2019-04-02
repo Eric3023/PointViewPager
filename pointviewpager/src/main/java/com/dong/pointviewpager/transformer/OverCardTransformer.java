@@ -20,8 +20,12 @@ public class OverCardTransformer implements ViewPager.PageTransformer {
 
         if (position <= 0) {
             view.setRotation((45 * position));
-            view.setTranslationX((view.getWidth() / 3 * position));
+            if(view.getWidth() > view.getHeight())
+                view.setTranslationX((view.getWidth() / 3 * position));
+            else
+                view.setTranslationX((view.getHeight() / 3 * position));
         }else {
+            view.setRotation((0));
             //横向偏移量
             view.setTranslationX(-view.getWidth() * position);
             //缩放比例
