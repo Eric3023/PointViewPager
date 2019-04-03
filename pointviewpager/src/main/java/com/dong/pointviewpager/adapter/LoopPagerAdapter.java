@@ -79,6 +79,7 @@ public class LoopPagerAdapter extends PagerAdapter {
             cardView.setCardElevation(elevation);
             cardView.setContentPadding(padding, padding, padding, padding);
             SketchImageView imageView = cardView.findViewById(R.id.item_page_imageview);
+            imageView.setScaleType(imageScale);
             if (beans != null && beans.size() != 0)
                 ImageLoadUtil.loadImage(context, beans.get(position % beans.size()), imageView, defaultResource);
             imageView.setOnClickListener(onLoopPagerClickListener);
