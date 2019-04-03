@@ -9,7 +9,7 @@ allprojects {
     }
 }
 dependencies {
-    compile 'com.github.Eric3023:PointViewPager:v2.4.5'   
+    compile 'com.github.Eric3023:PointViewPager:2.5.1'   
 }
 ```
 
