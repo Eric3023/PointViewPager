@@ -11,7 +11,7 @@
     app:cardUseCompatPadding="true"
     app:contentPadding="0px">
 
-    <me.panpf.sketch.SketchImageView
+    <com.dong.pointviewpager.widget.RoundImageView
         android:id="@+id/item_page_imageview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

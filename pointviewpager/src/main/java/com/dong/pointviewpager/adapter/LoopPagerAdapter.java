@@ -2,6 +2,7 @@ package com.dong.pointviewpager.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.view.PagerAdapter;
 import android.support.v7.widget.CardView;
 import android.view.View;
@@ -79,8 +80,9 @@ public class LoopPagerAdapter extends PagerAdapter {
             cardView.setRadius(radius);
             cardView.setCardElevation(elevation);
             cardView.setContentPadding(padding, padding, padding, padding);
-            SketchImageView imageView = cardView.findViewById(R.id.item_page_imageview);
+            RoundImageView imageView = cardView.findViewById(R.id.item_page_imageview);
             imageView.setScaleType(imageScale);
+            imageView.setRadius(radius);
             if (beans != null && beans.size() != 0)
                 ImageLoadUtil.loadImage(context, beans.get(position % beans.size()), imageView, defaultResource);
             imageView.setOnClickListener(onLoopPagerClickListener);
