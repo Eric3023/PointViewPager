@@ -12,6 +12,7 @@ import com.dong.pointviewpager.R;
 import com.dong.pointviewpager.bean.LoopViewPagerBean;
 import com.dong.pointviewpager.listener.OnLoopPagerClickListener;
 import com.dong.pointviewpager.utils.ImageLoadUtil;
+import com.dong.pointviewpager.widget.RoundImageView;
 
 import java.util.List;
 
@@ -86,8 +87,9 @@ public class LoopPagerAdapter extends PagerAdapter {
             container.addView(cardView);
             return cardView;
         } else {
-            SketchImageView imageView = new SketchImageView(context);
+            RoundImageView imageView = new RoundImageView(context);
             imageView.setScaleType(imageScale);
+            imageView.setRadius(radius);
             if (beans != null && beans.size() != 0)
                 ImageLoadUtil.loadImage(context, beans.get(position % beans.size()), imageView, defaultResource);
             imageView.setOnClickListener(onLoopPagerClickListener);
