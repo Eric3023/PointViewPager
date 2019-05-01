@@ -77,7 +77,7 @@ public class LoopPagerAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, int position) {
         if (isCard) {
             CardView cardView = (CardView) View.inflate(context, R.layout.item_pager, null);
-            cardView.setRadius(radius);
+            cardView.setBackgroundColor(Color.TRANSPARENT);
             cardView.setCardElevation(elevation);
             cardView.setContentPadding(padding, padding, padding, padding);
             RoundImageView imageView = cardView.findViewById(R.id.item_page_imageview);
